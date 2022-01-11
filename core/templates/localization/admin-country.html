@@ -1,0 +1,517 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% load i18n %}
+{% block body %}
+    <div class="page-body">
+        <!-- Container-fluid starts-->
+        <div class="container-fluid">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="page-header-left">
+                            <h3>{% translate 'Country' %}
+                                <small>{% translate 'Ydoob Admin panel' %}</small>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <ol class="breadcrumb pull-right">
+                            <li class="breadcrumb-item"><a href="{% url 'core:AdminIndex' %}"><i
+                                    data-feather="home"></i></a></li>
+                            <li class="breadcrumb-item active">{% blocktrans %}  {{ title }} {% endblocktrans %}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Container-fluid Ends-->
+
+        <!-- Container-fluid starts-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>{% translate 'Country List' %}</h5>
+
+                        </div>
+                        <div class="card-body">
+
+
+                            <div class="btn-popup pull-right">
+                                <button type="button" class="btn btn-primary " data-bs-toggle="modal"
+                                        data-original-title="test"
+                                        data-bs-target="#addModal"> {% translate '+ Country/City' %}
+                                </button>
+                                <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title f-w-600"
+                                                    id="exampleModalLabel">{% translate '+ Country' %}</h5>
+                                                <button class="btn-close" type="button" data-bs-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row col-md-12 ">
+
+                                                <a class="col-md-6" href="{% url 'core:AdminCountryCreate' %}">
+                                                    <button type="button" class="btn btn-primary  " data-toggle="modal"
+                                                            data-original-title="test"
+                                                            data-target="#addModal">{% translate '+ Country' %}
+                                                    </button>
+                                                </a>
+
+                                                <a class="col-md-6"  href="{% url 'core:AdminGovernoratesCreate' %}">
+                                                    <button type="button" class="btn btn-primary " data-toggle="modal"
+                                                            data-original-title="test"
+                                                            data-target="#addModal">{% translate '+ Governorates' %}
+                                                    </button>
+                                                </a>
+
+<hr>
+                                            <div class="row col-md-12">
+                                                <a  class="col-md-6" href="{% url 'core:AdminCityCreate' %}">
+                                                    <button type="button" class="btn btn-primary  " data-toggle="modal"
+                                                            data-original-title="test"
+                                                            data-target="#addModal">{% translate '+ City' %}
+                                                    </button>
+                                                </a>
+
+                                                <a  class="col-md-6" href="{% url 'core:AdminAreaCreate' %}">
+                                                    <button type="button" class="btn btn-primary " data-toggle="modal"
+                                                            data-original-title="test"
+                                                            data-target="#addModal">{% translate '+ Area' %}
+                                                    </button>
+                                                </a>
+                                            </div> </div> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="btn-popup pull-right">
+                                <button type="button" class="btn btn-primary " data-bs-toggle="modal"
+                                        data-original-title="test"
+                                        data-bs-target="#exampleModal">{% translate 'Import/Export' %}
+                                </button>
+                                &nbsp; &nbsp; &emsp; &emsp;
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title f-w-600" id="exampleModalLabel">Import /
+                                                    Export</h5>
+                                                <button class="btn-close" type="button" data-bs-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div class="modal-body ">
+                                                <div id="Country">
+                                                    <form method="post" action="{% url 'core:AdminCountryReportExport' %}"
+                                                          enctype="multipart/form-data">
+                                                        {% csrf_token %}
+
+                                                        <div class="row col-12">
+                                                            <div class="col-md-4">
+                                                                <label> Country! Export.</label>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <select class="form-control  col-md" name="file-format"
+                                                                        id="exampleFormControlSelect1"
+                                                                        title="Country! Export.">
+                                                                    <option selected>Choose format...</option>
+                                                                    <option>CSV</option>
+                                                                    <option>JSON</option>
+                                                                    <option>XLS (Excel)</option>
+                                                                </select>
+
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <button class="btn btn-primary col-md" type="submit">
+                                                                    Export
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+
+
+                                                    </form>
+                                                    <br>
+                                                    <form method="post" action="{% url 'core:AdminCountryReportImport' %}"
+                                                          enctype="multipart/form-data">
+                                                        {% csrf_token %}
+
+                                                        <div class="row col-12">
+                                                            <div class="col-md-4">
+                                                                <label> Country! Import.</label>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <input type="file" name="country-file">
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <button class="btn btn-primary col-md" type="submit">
+                                                                    Import
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <hr>
+                                                <div id="Governorates">
+                                                    <form method="post"
+                                                          action="{% url 'core:AdminGovernoratesReportExport' %}"
+                                                          enctype="multipart/form-data">
+                                                        {% csrf_token %}
+
+                                                        <div class="row col-12">
+                                                            <div class="col-md-4">
+                                                                <label> Governorates! Export.</label>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <select class="form-control  col-md" name="file-format"
+                                                                        id="exampleFormControlSelect1"
+                                                                        title="Governorates! Export.">
+                                                                    <option selected>Choose format...</option>
+                                                                    <option>CSV</option>
+                                                                    <option>JSON</option>
+                                                                    <option>XLS (Excel)</option>
+                                                                </select>
+
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <button class="btn btn-primary col-md" type="submit">
+                                                                    Export
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+
+
+                                                    </form>
+                                                    <br>
+                                                    <form method="post"
+                                                          action="{% url 'core:AdminGovernoratesReportImport' %}"
+                                                          enctype="multipart/form-data">
+                                                        {% csrf_token %}
+
+                                                        <div class="row col-12">
+                                                            <div class="col-md-4">
+                                                                <label> Governorates! Import.</label>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <input type="file" name="governorates-file">
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <button class="btn btn-primary col-md" type="submit">
+                                                                    Import
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <hr>
+                                                <div id="City">
+                                                    <form method="post" action="{% url 'core:AdminCityReportExport' %}"
+                                                          enctype="multipart/form-data">
+                                                        {% csrf_token %}
+
+                                                        <div class="row col-12">
+                                                            <div class="col-md-4">
+                                                                <label> City! Export.</label>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <select class="form-control  col-md" name="file-format"
+                                                                        id="exampleFormControlSelect1"
+                                                                        title="City! Export.">
+                                                                    <option selected>Choose format...</option>
+                                                                    <option>CSV</option>
+                                                                    <option>JSON</option>
+                                                                    <option>XLS (Excel)</option>
+                                                                </select>
+
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <button class="btn btn-primary col-md" type="submit">
+                                                                    Export
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+
+
+                                                    </form>
+                                                    <br>
+                                                    <form method="post" action="{% url 'core:AdminCityReportImport' %}"
+                                                          enctype="multipart/form-data">
+                                                        {% csrf_token %}
+
+                                                        <div class="row col-12">
+                                                            <div class="col-md-4">
+                                                                <label> City! Import.</label>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <input type="file" name="city-file">
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <button class="btn btn-primary col-md" type="submit">
+                                                                    Import
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <hr>
+                                                <div id="Area">
+                                                    <form method="post" action="{% url 'core:AdminAreaReportExport' %}"
+                                                          enctype="multipart/form-data">
+                                                        {% csrf_token %}
+
+                                                        <div class="row col-12">
+                                                            <div class="col-md-4">
+                                                                <label> Area! Export.</label>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <select class="form-control  col-md" name="file-format"
+                                                                        id="exampleFormControlSelect1"
+                                                                        title="Area! Export.">
+                                                                    <option selected>Choose format...</option>
+                                                                    <option>CSV</option>
+                                                                    <option>JSON</option>
+                                                                    <option>XLS (Excel)</option>
+                                                                </select>
+
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <button class="btn btn-primary col-md" type="submit">
+                                                                    Export
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+
+
+                                                    </form>
+                                                    <br>
+                                                    <form method="post" action="{% url 'core:AdminAreaReportImport' %}"
+                                                          enctype="multipart/form-data">
+                                                        {% csrf_token %}
+
+                                                        <div class="row col-12">
+                                                            <div class="col-md-4">
+                                                                <label> Area! Import.</label>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <input type="file" name="area-file">
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <button class="btn btn-primary col-md" type="submit">
+                                                                    Import
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+
+                                                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="card-body p-0 ">
+                                <table class="table table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 1%">
+                                            {% translate '#'%}
+                                        </th>
+                                        <th style="width: 20%">
+                                            {% translate 'Name' %}
+                                        </th>
+                                        <th style="width: 20%">
+                                           {% translate 'TR Name' %}
+                                        </th>
+
+                                        <th style="width: 20%">
+                                            {% translate 'Sort Order' %}
+                                        </th>
+                                        <th style="width: 30%" class=" pull-right">
+                                           {% translate ' Edit/Delete' %}
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for rs in object_list %}
+                                        <tr>
+                                            <td>
+                                                {{ forloop.counter }}
+                                            </td>
+                                            <td>
+                                                <a>
+                                                    {{ rs.name }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a>
+                                                    {{ rs.name_ar }}
+                                                </a>
+                                            </td>
+
+                                            <td class="project-state">
+                                                <span class="badge badge-success">{{ forloop.counter }}</span>
+                                            </td>
+                                            <td class="project-actions text-right pull-right">
+
+                                                <a class="btn btn-animation btn-sm" href="{% url 'core:AdminCountryEdit' rs.id %}">
+                                                    <i class="fas fa-pencil-alt">
+                                                    </i>
+                                                    {% translate 'Edit'%}
+                                                </a>
+                                                <a href="{% url 'core:AdminCountryDelete' rs.id %}"
+                                                   onclick="return confirm('Are you sure you want to delete {{ rs.name }}?')">
+                                                    <button class="btn" type="button" data-original-title="" title=""><i
+                                                            class="ti-trash"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {% if is_paginated %}
+    <div class="product-pagination">
+        <div class="theme-paggination-block">
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-12">
+                    <nav aria-label="Page navigation">
+
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item"><a
+                                            class="page-link"
+                                            href="?page={{ page_obj.previous_page_number }}"
+                                            aria-label="Previous"><span
+                                            aria-hidden="true"><i
+                                            class="fa fa-chevron-left"
+                                            aria-hidden="true"></i></span>
+                                        <span
+                                                class="sr-only">{% translate 'Previous' %}</span></a>
+                                    </li>
+                                {% endif %}
+
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item"><a
+                                            class="page-link"
+                                            href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                                    </li>
+                                {% endif %}
+                                {% for i in paginator.page_range %}
+                                    {% if notifications.number == i %}
+                                        <li class="page-item active">
+                                            <a
+                                                    class="page-link"
+                                                    href="?page={{ i }}">{{ i }}</a>
+                                        </li>
+                                    {% endif %}{% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item"><a
+                                            class="page-link"
+                                            href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                                    </li>
+                                {% endif %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item"><a
+                                            class="page-link"
+                                            href="?page={{ page_obj.next_page_number }}"
+                                            aria-label="Next"><span
+                                            aria-hidden="true"><i
+                                            class="fa fa-chevron-right"
+                                            aria-hidden="true"></i></span>
+                                        <span
+                                                class="sr-only">{% translate 'Next' %}</span></a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                            </nav>
+                            </div>
+                            <div class="col-xl-6 col-md-6 col-sm-12">
+                                <div class="product-search-count-bottom">
+
+                                    <h5>{% translate 'Showing Notification' %} {{ paginator.page_range }}
+                                        {% translate 'of' %}
+                                        {{ paginator.count }} {% translate 'Result' %}</h5>
+
+                                </div>
+                            </div>
+                            </div>
+
+                            </div>
+                            </div>
+    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        <!-- Container-fluid Ends-->
+
+    </div>
+
+
+    <!-- Container-fluid Ends-->
+
+
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+        $(function () {
+            $('#cp5a').colorpicker({
+                format: 'auto'
+            });
+            $('#cp5b').colorpicker({
+                format: null
+            });
+        });
+    </script>
+{% endblock custom_js %}
+{% block foot %} {% include 'admin/footer.html' %}  {% endblock %}
+{% block js %} {% include 'admin/js.html' %}  {% endblock %}

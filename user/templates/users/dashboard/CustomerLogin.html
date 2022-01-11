@@ -1,0 +1,128 @@
+{% extends 'front/homebase.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load i18n %}
+{% block body %}
+
+    <!-- breadcrumb start -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="page-title">
+                        <h2>{% translate "customer's login" %}</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'home:index' %}">{% translate 'Home' %}</a></li>
+                            /
+                            <li class="breadcrumb-item active">{% translate 'login' %}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb End -->
+
+
+    <!--section start-->
+    <section class="login-page section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>{% translate 'Login' %}</h3>
+                    <div class="theme-card">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <form class="theme-form" action="{% url 'user:CustomerLogin' %}" method="post">
+                            {% csrf_token %}
+                            <div>
+                                {{ form|as_crispy_errors:"bootstrap4" }}</div>
+
+                            <div class="form-group">
+                                {{ form|crispy }}
+
+                            </div>
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                       value="{{ redirect_field_value }}"/>
+                            {% endif %}
+                            <div class="product-buttons text-center">
+
+                                <button type="submit" class="btn btn-solid  submit_btn">{% trans "Login" %}</button>
+
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="{% url "user:ResetPassword" %}">
+                                    <button type="button" class="btn btn-solid" data-toggle="modal"
+                                            data-original-title="test"
+                                            data-target="#exampleModal">{% trans "Forgot Password?" %}
+                                    </button>
+                                </a>
+                            </div>
+                            <br> <br>
+                            <div class="form-footer">
+                                <span>{% trans 'Or Login up with social platforms' %}</span>
+
+                                <br> <br>
+
+
+                                <ul class="social  text-center">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <li><strong><a class="fa fa-facebook-f fa-2x"
+                                                   href="{% url 'social:begin' 'facebook' %}"></a></strong></li>&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <li><strong><a class="fa fa-google fa-2x"
+                                                   href="{% url 'social:begin' 'google-oauth2' %}"></a></strong></li>&nbsp;&nbsp;
+
+
+                                </ul>
+                            </div>
+
+
+                        </form>
+                    </div>
+
+
+                </div>
+                <div class="col-md-6 ">
+
+                    <h3>{% trans 'New Customer' %}</h3>
+                    <div class="theme-card authentication-right">
+                        <h6 class="title-font">{% trans 'Create Account' %}</h6>
+                        <p>{% trans 'Sign up for a free account at our store. Registration is quick and easy.' %}</p><a
+                            href="{% url 'user:CustomerRegister' %}"
+                            class="btn btn-solid">{% trans 'Create Account' %}</a>
+                        <br><br>
+
+                        <h6 class="title-font">{% trans 'Create Seller' %}</h6>
+                        <p>{% trans 'Sign up for a free account at our store. Registration is quick and easy.' %}</p><a
+                            href="{% url 'vendors:SellerRegister' %}"
+                            class="btn btn-solid">{% trans 'Create Seller' %}</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section ends-->
+
+
+{% endblock %}
+
+
+{% block foot %} {% include 'front/footer.html' %}  {% endblock %}
+{% block js %} {% include 'front/js.html' %}  {% endblock %}
+
+

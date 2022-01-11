@@ -1,0 +1,223 @@
+{% extends 'frontend/homebase.html' %}
+{% load static %}
+{% load i18n %}
+{% block body %}
+
+    <!-- Hero Section
+        ================================================== -->
+    <section id="top"
+             class="pa-hero pa-project-hero pa-full-height pa-image-back d-flex align-items-end pushable-content"
+             style="background-image: url({% static '' %}assets/images/portfolio-item.jpg);">
+
+        <div class="container-fluid pa-project-hero-info">
+            <div class="row pa-mobile-project-view">
+                <div class="col px-0">
+                    <img alt="" src="{% static '' %}assets/images/portfolio-item.jpg">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div id="particles-js"></div>
+                    <div class="container">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-12 col-lg-8 text-left px-0">
+                                <div class="typed-text">
+									<span class="animated-text-effect">
+										<!-- <span class="typed-cursor">|</span> -->
+									</span>
+                                </div>
+                                <p class="pa-p-v1 pa-bright fadeInDelay03Duration10">Lorem ipsum dolor sit amet,
+                                    consectetur adipiscing elit. Integer nec odio.</p>
+                            </div>
+                            <div class="col-12 col-lg-4 mb-4 mb-lg-0 text-left text-lg-right px-0">
+                                <a class="pa-button-primary pa-hvr-sweep-to-right" href="#project-info">Project Info</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- /.pa-hero -->
+
+
+    <!-- Project Content Section
+    ================================================== -->
+    <section id="project-info" class="pa-project-content" data-parallax="scroll" data-speed="0"
+             data-image-src="{% static '' %}assets/images/contact-hero.jpg">
+        <div class="container">
+            <div class="row">
+                <!-- Left Side - About & Links -->
+                <div class="col-12 col-xl-7 text-left">
+                    <h1 class="pa-h1-v3 pa-bright fadeInDelay03Duration10">About the <strong>project</strong></h1>
+                    <p class="pa-p-v1 pa-bright fadeInDelay03Duration10">Lorem ipsum dolor sit amet, consectetur
+                        adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.
+                        Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Lorem ipsum
+                        dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante
+                        dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.
+                        Praesent mauris.</p>
+                    <div class="row pa-project-links">
+                        <!-- Use either FontAwesome or MaterialIcons icons (examples below) -->
+                        <div class="col-12 col-md-7">
+                            <h1 class="pa-h1-v3 pa-bright fadeInDelay03Duration10">Useful <strong>links</strong></h1>
+                            <!-- Mind the "title" in icon links -->
+                            <a title="Official Project Link" href="https://www.facebook.com/SkilltechWebDesign"
+                               target="_blank"><span class="pa-project-icons fadeInDelay03Duration10"><i
+                                    class="material-icons">computer</i></span></a>
+                            <a title="Project on Facebook" href="https://www.facebook.com/SkilltechWebDesign"
+                               target="_blank"><span class="pa-project-icons fadeInDelay03Duration10"><i
+                                    class="fa fa-facebook"></i></span></a>
+                            <a title="Project on Behance" href="https://www.facebook.com/SkilltechWebDesign"
+                               target="_blank"><span class="pa-project-icons fadeInDelay03Duration10"><i
+                                    class="fa fa-behance"></i></span></a>
+                            <a title="Project on Linkedin" href="https://www.facebook.com/SkilltechWebDesign"
+                               target="_blank"><span class="pa-project-icons fadeInDelay03Duration10"><i
+                                    class="fa fa-linkedin"></i></span></a>
+                            <a title="Project on Dribbble" href="https://www.facebook.com/SkilltechWebDesign"
+                               target="_blank"><span class="pa-project-icons fadeInDelay03Duration10"><i
+                                    class="fa fa-dribbble"></i></span></a>
+                            <a title="Project on Instagram" href="https://www.facebook.com/SkilltechWebDesign"
+                               target="_blank"><span class="pa-project-icons fadeInDelay03Duration10"><i
+                                    class="fa fa-instagram"></i></span></a>
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <h1 class="pa-h1-v3 pa-bright fadeInDelay03Duration10">Download <strong>links</strong></h1>
+                            <a title="Download .zip" href="https://www.facebook.com/SkilltechWebDesign" target="_blank"><span
+                                    class="pa-project-icons fadeInDelay03Duration10"><i class="material-icons">description</i></span></a>
+                            <a title="Download .pdf" href="https://www.facebook.com/SkilltechWebDesign" target="_blank"><span
+                                    class="pa-project-icons fadeInDelay03Duration10"><i class="material-icons">picture_as_pdf</i></span></a>
+                            <a title="Download from the Cloud" href="https://www.facebook.com/SkilltechWebDesign"
+                               target="_blank"><span class="pa-project-icons fadeInDelay03Duration10"><i
+                                    class="material-icons">cloud_download</i></span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Side - Project Details -->
+                <div class="col-12 col-xl-5 pa-project-infoboxes overflow-hidden"><!-- fadeInRightDelay11Duration10 -->
+                    <div class="pa-project-infoboxes-helper fadeInLeftDelay05Duration10">
+                        <div class="pa-proj-infobox">
+                            <div class="pa-proj-infobox-label">Project Name</div>
+                            <div class="pa-proj-infobox-value">Awesome Portfolio Project</div>
+                            <div class="boaderix"></div>
+                        </div>
+                        <div class="pa-proj-infobox">
+                            <div class="pa-proj-infobox-label">Created by</div>
+                            <div class="pa-proj-infobox-value">Bruce Wayne</div>
+                            <div class="boaderix"></div>
+                        </div>
+                        <div class="pa-proj-infobox">
+                            <div class="pa-proj-infobox-label">Client</div>
+                            <div class="pa-proj-infobox-value">Microsoft</div>
+                            <div class="boaderix"></div>
+                        </div>
+                        <div class="pa-proj-infobox">
+                            <div class="pa-proj-infobox-label">Budget</div>
+                            <div class="pa-proj-infobox-value">$50,000.00</div>
+                            <div class="boaderix"></div>
+                        </div>
+                        <div class="pa-proj-infobox">
+                            <div class="pa-proj-infobox-label">Completion Date</div>
+                            <div class="pa-proj-infobox-value">January 17 2022</div>
+                            <div class="boaderix"></div>
+                        </div>
+                    </div>
+                    <div class="pa-project-infoboxes-helper pa-right fadeInLeftDelay05Duration10">
+                        <div class="pa-proj-infobox">
+                            <div class="pa-proj-infobox-label">Project Type</div>
+                            <div class="pa-proj-infobox-value">Web Development</div>
+                            <div class="boaderix"></div>
+                        </div>
+                        <div class="pa-proj-infobox">
+                            <div class="pa-proj-infobox-label">Project Length</div>
+                            <div class="pa-proj-infobox-value">3 Months</div>
+                            <div class="boaderix"></div>
+                        </div>
+                        <div class="pa-proj-infobox">
+                            <div class="pa-proj-infobox-label">Skills Used</div>
+                            <div class="pa-proj-infobox-value">JavaScript, Php, Python</div>
+                            <div class="boaderix"></div>
+                        </div>
+                        <div class="pa-proj-infobox">
+                            <div class="pa-proj-infobox-label">Poject Manager</div>
+                            <div class="pa-proj-infobox-value">Dejan Stankovic</div>
+                            <div class="boaderix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row overflow-hidden">
+                <div class="col slideDownDelay10Duration10">
+                    <h1 class="pa-h1-v3 pa-bright">Get <strong>involved</strong></h1>
+
+                    <!-- Real Working Form - Simple Forms V3 -->
+                    <div class="sf-wrapper">
+                        <form
+                      enctype="multipart/form-data" action="{% url 'home:Contact' %}"
+                      method="post">
+                                 {% csrf_token %}
+
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" name="name" value="" class="validate-name" minlength="2" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" name="email" class="validate-email" value="">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea name="message" required></textarea>
+                            </div>
+
+
+                            <div class="form-submit">
+                                <button type="submit" class="pa-hvr-sweep-to-right">Send now</button>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- /.pa-project-content -->
+
+{% endblock %}
+
+{#<script src="{% static '' %}{% static '' %}{% static '' %}assets/js/particle-theme.js"></script>#}
+{#	<script src="{% static '' %}{% static '' %}{% static '' %}assets/js/page-service-item.js"></script>#}
+{% block custom_js %}
+
+    <script>
+        $(document).ready(function () {
+
+            // Custom JavaScript for all "service-item" pages
+
+            // Initiate typed.js text effect (done custom for each typed text effect)
+            $(".animated-text-effect").typed({
+                strings: ["{{ object.title }}^"], // example for multiple headings strings: ["Awesome Ineractive Effect^", "Click on the live effect!^", "Coolest Modern HTML Theme^"],
+                contentType: "text",
+                typeSpeed: 30,
+                loop: true,
+                backDelay: 1200,
+                showCursor: true,
+                startDelay: 3200, // PRELOADER -- comment-out this line if you stop using page preloader
+                cursorChar: "|"
+            });
+
+        });
+    </script>
+
+
+
+{% endblock custom_js %}
+{% block foot %} {% include 'frontend/footer.html' %}  {% endblock %}
+{% block js %} {% include 'frontend/js.html' %}{% endblock %}
+

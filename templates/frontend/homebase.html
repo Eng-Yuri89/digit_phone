@@ -1,0 +1,74 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% get_current_language as LANGUAGE_CODE %}
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% for rs in all_setting.seosetting_set.all %}
+	<meta name="description" content="{{ rs.seo_description }}!">
+	<meta name="author" content="{{ rs.seo_author }}">
+	<meta name="keywords" content="{{ rs.seo_keywords }}"/>
+
+	<meta property="og:title" content="{{ rs.seo_title }}!"/>
+	<meta property="og:description" content="{{ rs.seo_keywords }} !"/>
+	<meta property="og:image" content="{{ rs.seo_image }}"/>
+	<meta property="og:site_name" content="{{ rs.seo_site_name }}"/>
+    {% endfor %}
+
+	<title>{{ all_setting.title }}| {{ all_setting.keywords }}</title>
+
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+	<!-- Bootstrap CSS -->
+	<meta charset="UTF-8">
+	<title>Octavian</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Octavian - Multipurpose agency website" />
+	<meta name="author" content="TexTheme">
+	<meta name="keywords" content="" />
+	<link rel="icon" href="{% static '' %}assets/images/favicon.png">
+	<link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/animate.css">
+	<link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/slick.css">
+	<link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/slick-theme.css">
+	<link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/flaticon2.css">
+	<link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/flaticon4.css">
+	<link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="{% static '' %}assets/css/responsive.css">
+
+</head>
+
+
+<body>
+
+
+	<div class="page-loading">
+    	<img src="{% static '' %}assets/images/loader.gif" alt="" />
+    </div><!--page-loading end-->
+
+	<div class="wrapper">
+
+{% block header %} {% include 'frontend/header.html' %}  {% endblock %}
+
+{% block body %}
+
+{% endblock %}
+
+
+</div><!--wrapper end-->
+
+
+{% block foot %} {% endblock %}
+{% block js %} {% endblock %}
+{% block custom_js %}{% endblock custom_js %}
+
+
+
+
+
+</body>
+</html>

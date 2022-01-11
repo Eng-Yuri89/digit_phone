@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+{% if setting_data == 'en' %}
+<html  lang="en" >
+ {% elif setting_data == 'ar' %}
+ <html lang="ar" dir="rtl" >
+    {% else %}
+    <html  lang="en" >
+ {% endif %}
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% translate 'Digit Hup | Dashboard' %}</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static '' %}plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="{% static '' %}plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static '' %}plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static '' %}plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static '' %}dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static '' %}plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static '' %}plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static '' %}plugins/summernote/summernote-bs4.min.css">
+
+    <!-- bootstrap slider -->
+  <link rel="stylesheet" href="{% static '' %}plugins/bootstrap-slider/css/bootstrap-slider.min.css">
+
+
+</head>
+{% if setting_data == 'en' %}
+<body>
+    {% elif setting_data == 'ar' %}
+    <<body class="rtl dark">
+
+ {% else %}
+<body class="hold-transition sidebar-mini layout-fixed">
+
+{% endif %}
+
+<div class="wrapper">
+
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="{% static '' %}dist/img/digithuplogo.png" alt="DigitHup" height="60" width="60">
+  </div>
+
+
+<!-- page-wrapper Start-->
+<div class="page-wrapper">
+ {% block header %} {% include 'backend/header.html' %} {% endblock %}
+
+
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper">
+
+        {% block page_content %}
+        {% endblock page_content %}
+        <!-- Page Header Ends -->
+
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+
+{% block sidebar %} {% include 'backend/sidebar.html' %} {% endblock %}
+
+
+
+            <div class="page-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == "success" %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                        {% if message.tags == "error" %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% block body %}  {% endblock %}
+
+            </div>
+
+            {% block foot %}  {% endblock %}
+        </div>
+
+    </div>
+</div>
+
+
+{% block js %}  {% endblock %}
+{% block custom_js %}
+{% endblock custom_js %}
+
+
+</body></body></body>
+</html>

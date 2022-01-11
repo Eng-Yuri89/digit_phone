@@ -1,0 +1,228 @@
+{% extends 'backend/adminbase.html' %}
+{% load static %}
+{% load i18n %}
+{% load mptt_tags %}
+{% block body %}
+
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>{% translate 'Banner' %}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="{% url 'core:AdminIndex' %}">{% translate 'Home' %}</a>
+                            </li>
+                            <li class="breadcrumb-item active">{% translate 'Banner' %}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">{% translate 'Banner' %}</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+             <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"></h3>
+
+                        <div class="card-tools">
+                            <a class="btn btn-block btn-outline-primary" href="{% url 'core:AdminAddBanner' %}">
+                                <i class="fas fa-plus">
+                                </i>
+                                {% translate ' Banner' %}
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped projects">
+                        <thead>
+                        <tr>
+                            <th style="width: 1%">
+                                {% translate '#' %}
+                            </th>
+                            <th style="width: 20%">
+                                {% translate 'Banner Name' %}
+                            </th>
+                            <th style="width: 30%">
+                                {% translate 'Banner image ' %}
+                            </th>
+                            <th>
+                                {% translate 'Category ' %}
+                            </th>
+                            <th style="width: 8%" class="text-center">
+                                {% translate 'Status' %}
+                            </th>
+                            <th style="width: 20%">
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {% for rs in object_list %}
+                                <td>
+                                    {{ forloop.counter }}
+                                </td>
+                                <td>
+                                    <a>
+                                        {{ rs.title }}
+                                    </a>
+                                    <br/>
+                                    <small>
+                                        Updated {{ rs.update_at }}
+                                    </small>
+                                </td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="{{ rs.image.url }}">
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="{{ rs.banner.url }}">
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="{ rs.banner.url }}">
+                                        </li>
+
+                                    </ul>
+                                </td>
+                                <td class="project-state">
+                                    <span class="badge badge-info">{{ rs.category }}</span>
+                                </td>
+                                <td class="project-state">
+                                    <span class="badge badge-success">{{ rs.status }}</span>
+                                </td>
+                                <td class="project-actions text-right">
+                                    <a class="btn btn-primary btn-sm"
+                                       href="{% url 'core:AdminDetailsServices' rs.pk %}">
+                                        <i class="fas fa-folder">
+                                        </i>
+                                        {% translate 'View' %}
+                                    </a>
+                                    <a class="btn btn-info btn-sm" href="{% url 'core:AdminUpdateServices' rs.pk %}">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        {% translate 'Edit' %}
+                                    </a>
+                                    <a class="btn btn-danger btn-sm" href="{% url 'core:AdminDeleteServices'  rs.pk %}"
+                                       onclick="return confirm('Are you sure you want to delete {{ rs.title }}?')">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        {% translate 'Delete' %}
+                                    </a>
+                                </td>
+
+                                </tr>  {% endfor %}
+
+                        </tbody>
+                    </table>
+                    {% if is_paginated %}
+                        <div class="product-pagination">
+                            <div class="theme-paggination-block">
+                                <div class="row">
+                                    <div class="col-xl-6 col-md-6 col-sm-12">
+                                        <nav aria-label="Page navigation">
+
+                                            <ul class="pagination">
+                                                {% if page_obj.has_previous %}
+                                                    <li class="page-item"><a
+                                                            class="page-link"
+                                                            href="?page={{ page_obj.previous_page_number }}"
+                                                            aria-label="Previous"><span
+                                                            aria-hidden="true"><i
+                                                            class="fa fa-chevron-left"
+                                                            aria-hidden="true"></i></span>
+                                                        <span
+                                                                class="sr-only">{% translate 'Previous' %}</span></a>
+                                                    </li>
+                                                {% endif %}
+
+                                                {% if page_obj.has_previous %}
+                                                    <li class="page-item"><a
+                                                            class="page-link"
+                                                            href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                                                    </li>
+                                                {% endif %}
+                                                {% for i in paginator.page_range %}
+                                                    {% if notifications.number == i %}
+                                                        <li class="page-item active">
+                                                            <a
+                                                                    class="page-link"
+                                                                    href="?page={{ i }}">{{ i }}</a>
+                                                        </li>
+                                                    {% endif %}{% endfor %}
+                                                {% if page_obj.has_next %}
+                                                    <li class="page-item"><a
+                                                            class="page-link"
+                                                            href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                                                    </li>
+                                                {% endif %}
+                                                {% if page_obj.has_next %}
+                                                    <li class="page-item"><a
+                                                            class="page-link"
+                                                            href="?page={{ page_obj.next_page_number }}"
+                                                            aria-label="Next"><span
+                                                            aria-hidden="true"><i
+                                                            class="fa fa-chevron-right"
+                                                            aria-hidden="true"></i></span>
+                                                        <span
+                                                                class="sr-only">{% translate 'Next' %}</span></a>
+                                                    </li>
+                                                {% endif %}
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <div class="col-xl-6 col-md-6 col-sm-12">
+                                        <div class="product-search-count-bottom">
+
+                                            <h5>{% translate 'Showing Notification' %} {{ paginator.page_range }}
+                                                {% translate 'of' %}
+                                                {{ paginator.count }} {% translate 'Result' %}</h5>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+
+
+{% endblock %}
+{% block foot %} {% include 'backend/footer.html' %}  {% endblock %}
+{% block js %} {% include 'backend/js.html' %}  {% endblock %}

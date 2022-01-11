@@ -1,0 +1,86 @@
+{% load static %}
+{% load i18n %}
+
+<!-- Navigation Menu
+	================================================== -->
+	<a class="pa-mobile-main-logo" href="#"><img alt="" src="{%  static '' %}assets/images/logo-normal.png"></a>
+
+	<nav id="main-nav" class="pa-menu navbar pa-navbar navbar-expand-lg navbar-dark bg-transparent static-top">
+
+		<!-- Desktop Menu Logo -->
+		<a class="navbar-brand" href="#"><img alt="" src="{%  static '' %}assets/images/logo-normal.png"></a>
+
+		<!-- The Menu -->
+		<ul class="navbar-nav ml-auto">
+
+			<!-- Mobile Menu Logo (only use if "close" buttons are set to false in JS) -->
+			<li data-nav-custom-content class="custom-content pa-mobile-menu-logo">
+				<a class="pa-mobile-navbar-brand" href="#"><img alt="" src="{%  static '' %}assets/images/logo-mobile.png"></a>
+			</li>
+
+			<!-- Regular Menu Items Start -->
+			<li class="nav-item">
+				<a class="nav-link hvr-underline-from-center" href="{% url 'home:HomeIndex' %}">{% translate 'Home' %}</a>
+
+			</li>
+
+			<li class="nav-item menu-item-has-children">
+				<a class="nav-link hvr-underline-from-center" href="#portfolio">{% translate 'Our Products' %}</a>
+				<ul class="pa-submenu-ul">
+					<li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+                    {% for rs in all_product %}
+					<li class="nav-item"><a class="nav-link" href="{% url 'home:FrontDetailsProduct' rs.slug %}">{{ rs.title }}</a></li>
+                    {% endfor %}
+
+				</ul>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link hvr-underline-from-center" href="#about-us">About Us</a>
+			</li>
+
+			<li class="nav-item menu-item-has-children">
+				<a class="nav-link hvr-underline-from-center" href="#services">Services</a>
+				<ul class="pa-submenu-ul">
+					<li class="nav-item"><a class="nav-link" href="{% url 'home:AllServices' %}">All Services</a></li>
+                    {% for rs in all_services %}
+					<li class="nav-item"><a class="nav-link" href="{% url 'home:FrontDetailsServices' rs.slug %}">{{ rs.title }}</a></li>
+                    {% endfor %}
+
+				</ul>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link hvr-underline-from-center" href="#skills">{% translate 'Our Skills' %}</a>
+			</li>
+
+			<li class="nav-item ">
+				<a class="nav-link hvr-underline-from-center" href="{% url 'home:Blog' %}"><strong>{% translate 'Blog' %}</strong> </a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link hvr-underline-from-center" href="#contact-us">Contact Us</a>
+			</li>
+
+			<!-- Regular Menu Items End -->
+
+			<!-- Mobile Menu Social Icons -->
+			<li data-nav-custom-content class="custom-content pa-menu-socials">
+				<div class="pa-social-section">
+					<h1 class="pa-h1-v3 pa-bright fadeInDelay03Duration10"><strong>Connect</strong> with us</h1>
+					<a class="pa-social-icons" href="https://www.facebook.com/SkilltechWebDesign" target="_blank"><span class="fadeInDelay03Duration10"><i class="fa fa-facebook"></i></span></a>
+					<a class="pa-social-icons" href="https://www.facebook.com/SkilltechWebDesign" target="_blank"><span class="fadeInDelay03Duration10"><i class="fa fa-behance"></i></span></a>
+					<a class="pa-social-icons" href="https://www.facebook.com/SkilltechWebDesign" target="_blank"><span class="fadeInDelay03Duration10"><i class="fa fa-dribbble"></i></span></a>
+					<a class="pa-social-icons" href="https://www.facebook.com/SkilltechWebDesign" target="_blank"><span class="fadeInDelay03Duration10"><i class="fa fa-instagram"></i></span></a>
+					<p class="pa-p-v1 pa-white pa-contact-lastline fadeInDelay03Duration10">digithup.</p>
+				</div>
+			</li>
+
+		</ul>
+	</nav>
+	<!-- /.pa-menu -->
+
+
+
+
+

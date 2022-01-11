@@ -1,0 +1,15 @@
+
+
+{% autoescape off %}
+    Hi {{ user.username }},
+    We’re excited you’ve joined Ydoob.
+    As soon as you verify your email to confirm this is you, we can get started.
+    Please click on the link to confirm your registration,
+    http://{{ domain }}{% url 'user:activate' uidb64=uid token=token %}
+
+    Having trouble? Contact our support heroes here.
+
+
+
+    The Ydoob team.
+{% endautoescape %}

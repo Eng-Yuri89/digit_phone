@@ -1,0 +1,255 @@
+{% extends 'backend/adminbase.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% load i18n %}
+{% load mptt_tags %}
+{% block body %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>{% translate 'Add Services' %}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a
+                                    href="{% url  'core:AdminIndex' %}">{% translate 'Home' %}</a></li>
+                            <li class="breadcrumb-item active">{% translate 'Add Services' %}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <form class="needs-validation add-product-form" novalidate=""
+                  enctype="multipart/form-data" action="{% url 'core:AdminAddServices' %}"
+                  method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">{% translate 'General' %}</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                            title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="inputName">{% translate 'Services Name' %}</label>
+                                    <input type="text" name="title" id="inputName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDescription">{% translate 'Services Description' %} </label>
+                                    <textarea name="keyword" id="inputDescription" class="form-control"
+                                              rows="4"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStatus">{% translate 'Status' %}</label>
+                                    <select name="status" id="inputStatus" class="form-control custom-select">
+                                        <option selected disabled>{% translate 'Select one' %}</option>
+                                        <option>{% translate 'Active' %}</option>
+                                        <option>{% translate 'Inactive' %}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStatus">{% translate 'Featured' %}</label>
+                                    <select name="is_featured" id="inputStatus" class="form-control custom-select">
+                                        <option selected disabled>{% translate 'Select one' %}</option>
+                                        <option>{% translate 'Active' %}</option>
+                                        <option>{% translate 'Inactive' %}</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">{% translate 'Extra Info' %}</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                            title="Collapse">°
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="inputStatus">{% translate 'Category' %}</label>
+                                    <select name="category" id="inputStatus" class="form-control custom-select">
+                                        <option selected disabled>{% translate 'Select one' %}</option>
+                                        {% for value, text in form.category.field.choices %}
+                                            <option value="{{ value }}">{{ text }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputStatus">{% translate 'Tags' %}</label>
+                                    <select name="tags" id="inputStatus" class="form-control custom-select">
+                                        <option selected disabled>{% translate 'Select one' %}</option>
+                                        {% for value, text in form.tags.field.choices %}
+                                            <option value="{{ value }}">{{ text }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEstimatedBudget">{% translate 'Brand' %}</label>
+                                    <input type="text" name="brand" id="inputEstimatedBudget" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEstimatedBudget">{% translate 'Sort Order' %}</label>
+                                    <input type="number" name="sort_order" id="inputEstimatedBudget"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSpentBudget">{% translate 'Slug' %}</label>
+                                    <input type="text" name="slug" id="inputSpentBudget" class="form-control">
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">{% translate 'Image' %}</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                            title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="inputEstimatedDuration">{% translate 'Image' %}</label>
+                                    <input type="file" class="form-control" name='image'
+                                           onchange="document.getElementById('image').src = window.URL.createObjectURL(this.files[0])">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEstimatedDuration">{% translate 'Image' %}</label>
+                                    <input type="file" class="form-control" name='banner'
+                                           onchange="document.getElementById('banner').src = window.URL.createObjectURL(this.files[0])">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEstimatedDuration">{% translate 'Image' %}</label>
+                                    <input type="file" class="form-control" name='banner_second'
+                                           onchange="document.getElementById('banner_second').src = window.URL.createObjectURL(this.files[0])">
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">{% translate 'Image Preview' %}</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                            title="Collapse">°
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="inputEstimatedBudget">{% translate 'Image' %}</label>
+                                    <img id="image" alt="your image" width="100" height="100"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSpentBudget">{% translate 'Image' %}</label>
+                                    <img id="banner" alt="your image" width="100" height="100"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEstimatedDuration">{% translate 'Image' %}</label>
+                                    <img id="banner_second" alt="your image" width="100" height="100"/>
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">{% translate 'Deatils' %}</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                            title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="inputDescription">{% translate 'Services Description' %} </label>
+                                    {{ form.media }}
+                                    {{ form.long_desc|as_crispy_field }}
+
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{% url 'core:AdminServices' %}" class="btn btn-secondary">{% translate 'Cancel' %}</a>
+                        <input type="submit" value="{% translate 'Add New Services' %}"
+                               class="btn btn-success float-right">
+                    </div>
+                </div>
+
+            </form>
+            <br>
+            <div>
+                {% if form_show_errors %}
+                {% endif %}
+                {% if form.errors %}
+                    {% for error_field, error_message in form.errors.items %}
+
+                        <div class="alert alert-danger">
+                            {{ error_field|striptags }}: {{ error_message|striptags }}
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+
+                {% endif %}
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+
+
+{% endblock %}
+{% block foot %} {% include 'backend/footer.html' %}  {% endblock %}
+{% block js %} {% include 'backend/js.html' %}  {% endblock %}

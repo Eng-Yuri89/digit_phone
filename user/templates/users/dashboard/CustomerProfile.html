@@ -1,0 +1,693 @@
+{% extends 'front/homebase.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% load i18n %}
+{% block javascript %}
+    <script src="{% static 'CustomFile/AddressJs.js' %}"></script>
+{% endblock %}
+{% block body %}
+
+
+    <!-- breadcrumb start -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="page-title">
+                        <h2>{{ user.first_name }}&nbsp;{% translate ' Profile' %}</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'home:index' %}">{% translate 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ user.first_name }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb End -->
+
+
+    <!--  dashboard section start -->
+    <section class="dashboard-section section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="dashboard-sidebar">
+                        <div class="profile-top">
+                            <div class="metro-section portfolio-section ratio_asos">
+                                <div class="product-box">
+                                    <div class="img-wrapper">
+                                        <div class="front">
+                                            {% if user.image %}
+                                                <p class="center-img"><img src="{{ user.image.url }}"
+                                                                           height="75px" alt="" class="img-fluid"></p>
+                                            {% else %}
+                                                <p><img src="https://picsum.photos/200/?random=1" alt=""
+                                                        class="img-fluid"></p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="cart-info cart-wrap">
+                                            <button title="Add to cart"><i class="ti-settings"></i></button>
+                                            <a href="{% url 'user:UpdateImage' user.slug %}" title="Change Image"><i
+                                                    class="ti-reload"
+                                                    aria-hidden=""></i></a>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="profile-detail">
+                                <h5>{{ user.first_name }}</h5>
+                                <h6>{{ user.email }}</h6>
+                            </div>
+                        </div>
+                        <div class="faq-tab">
+                            <ul class="nav nav-tabs" id="top-tab" role="tablist">
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link "
+                                                        href="#dashboard">{% translate 'dashboard' %}</a></li>
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link "
+                                                        href="#products">{% translate 'Complated Order' %}</a>
+                                </li>
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link "
+                                                        href="#orders">{% translate 'Canceled Order' %}</a>
+                                </li>
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link "
+                                                        href="#profile">{% translate 'profile' %}</a>
+                                </li>
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link "
+                                                        href="#address">{% translate 'Address' %}</a>
+                                </li>
+                                <li class="nav-item"><a data-bs-toggle="tab" class="nav-link active"
+                                                        href="#settings">{% translate 'settings' %}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       href="{% url 'user:CustomerLogout' %}"><span>{% translate 'Log Out' %}</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="faq-content tab-content" id="top-tabContent">
+                        <div class="tab-pane fade " id="dashboard">
+                            <div class="counter-section">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="counter-box">
+                                            <img src="{% static 'assets/' %}images/icon/dashboard/order.png"
+                                                 class="img-fluid">
+                                            <div>
+                                                <h3> {{ customer_orders_count }}</h3>
+
+                                                <h5>{% translate 'total orders' %}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="counter-box">
+                                            <img src="{% static 'assets/' %}images/icon/dashboard/sale.png"
+                                                 class="img-fluid">
+                                            <div>
+
+                                                <h3>{{ order_complete_count }}</h3>
+
+                                                <h5> {% translate 'completed' %}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="counter-box">
+                                            <img src="{% static 'assets/' %}images/icon/dashboard/homework.png"
+                                                 class="img-fluid">
+                                            <div>
+                                                <h3>{{ order_pending_count }}</h3>
+                                                <h5> {% translate 'pending' %}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="chart"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="chart-order"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card dashboard-table">
+                                        <div class="card-body">
+                                            <h3> {% translate ' completed orders' %}</h3>
+                                            <table class="table mb-0">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">{% translate 'image' %}</th>
+                                                    <th scope="col">{% translate 'product name' %}</th>
+                                                    <th scope="col">{% translate 'price' %}</th>
+                                                    <th scope="col">{% translate 'status' %}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for rc in order_complete %}
+                                                    <tr>
+
+                                                    <th scope="row"><img
+                                                            src="{{ rc.media.image.url }}"
+                                                            class="blur-up lazyloaded"></th>
+                                                    <td>{{ rc.product.title|truncatechars:9 }}</td>
+                                                    <td>{{ rc.order.amount }}{{ active_currency }}</td>
+                                                    <td>{{ rc.order.status }}</td>
+                                                {% endfor %}
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card dashboard-table">
+                                        <div class="card-body">
+                                            <h3>recent orders</h3>
+                                            <table class="table mb-0">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">{% translate 'order id' %}</th>
+                                                    <th scope="col">{% translate 'product details' %}</th>
+                                                    <th scope="col">{% translate 'status' %}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for rp in order_pending %}
+                                                    <tr>
+
+                                                    <th scope="row">#{{ rp.tracking }}</th>
+                                                    <td>{{ rp.product.title|truncatechars:9 }}</td>
+                                                    <td>{{ rp.status }}</td>
+                                                {% endfor %}
+                                                </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade  " id="products">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card dashboard-table mt-0">
+                                        <div class="card-body table-responsive-md">
+                                            <div class="top-sec">
+                                                <h3>{% translate 'all orders' %}</h3>
+
+                                            </div>
+                                            <table class="table mb-0">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">{% translate 'image' %}</th>
+                                                    <th scope="col">{% translate 'product name' %}</th>
+                                                    <th scope="col">{% translate 'category' %}</th>
+                                                    <th scope="col">{% translate 'price' %}</th>
+                                                    <th scope="col">{% translate 'stock' %}</th>
+                                                    <th scope="col">{% translate 'sales' %}</th>
+                                                    <th scope="col">{% translate 'purchase/invoice' %}</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                {% for rp in order_complete %}
+
+                                                    <tr>
+                                                        <th scope="row"><img
+                                                                src="{{ rp.media.image.url }}"
+                                                                class="blur-up lazyloaded"></th>
+                                                        <td>{{ rp.product.title|truncatechars:9 }}</td>
+                                                        <td>{{ rp.product.category }}</td>
+                                                        <td>${{ rp.product.final_price }}{{ active_currency }}</td>
+                                                        <td>{{ rp.product.quantity }}</td>
+                                                        <td>{{ rp.orders_complete.vendor.title }}</td>
+                                                        <td>
+                                                            <a href="{% url 'sales:AddToCart' rp.product.id %}"><i
+                                                                    class="fa fa-pencil-square-o me-1"
+                                                                    aria-hidden="true"></i></a>
+
+                                                            {#                                                            <a href="{% url 'invoice:CustomerViewDocumentInvoice' rp.invoice.slug %}"><i#}
+                                                            {#                                                                    class="fa fa-print  ms-1"#}
+                                                            {#                                                                    aria-hidden="true"></i></a>#}
+                                                        </td>
+                                                    </tr>{% endfor %}
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="orders">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card dashboard-table mt-0">
+                                        <div class="card-body table-responsive-sm">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">{% translate 'order id' %}</th>
+                                                    <th scope="col">{% translate 'product details' %}</th>
+                                                    <th scope="col">{% translate 'status' %}</th>
+                                                    <th scope="col">{% translate 'price' %}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <th scope="row">#125021</th>
+                                                    <td>neck velvet dress</td>
+                                                    <td>shipped</td>
+                                                    <td>$205</td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade   " id="profile">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card mt-0">
+                                        <div class="card-body">
+                                            <div class="dashboard-box">
+                                                <div class="dashboard-title row">
+                                                    <h4 class="col-md-4">{% translate 'profile' %}</h4>
+                                                    <div class="col-md-6 pull-right">
+
+                                                        <a href="{% url 'user:UpdateProfile' user.slug %}"
+                                                           class="btn btn-solid">{% translate 'Update Profile' %}</a>
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard-detail">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="details">
+                                                                <div class="left">
+                                                                    <h6>{% translate 'First name' %}</h6>
+                                                                </div>
+                                                                <div class="right">
+                                                                    <h6>{{ user.first_name }}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="details">
+                                                                <div class="left">
+                                                                    <h6>{% translate 'email address' %}</h6>
+                                                                </div>
+                                                                <div class="right">
+                                                                    <h6>{{ user.email }}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="details">
+                                                                <div class="left">
+                                                                    <h6>{% translate 'Mobile Number' %}</h6>
+                                                                </div>
+                                                                <div class="right">
+                                                                    <h6>{{ user.phone }}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="details">
+                                                                <div class="left">
+                                                                    <h6>{% translate 'Facebook' %}</h6>
+                                                                </div>
+                                                                <div class="right">
+                                                                    <h6>{{ user.facebook }}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="details">
+                                                                <div class="left">
+                                                                    <h6>{% translate 'instagram' %}</h6>
+                                                                </div>
+                                                                <div class="right">
+                                                                    <h6>{{ user.instagram }}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="details">
+                                                                <div class="left">
+                                                                    <h6>{% translate 'Twitter' %}</h6>
+                                                                </div>
+                                                                <div class="right">
+                                                                    <h6>{{ user.twitter }}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade " id="address">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card dashboard-table mt-0">
+                                        <div class="card-body table-responsive-md">
+                                            <div class="top-sec">
+                                                <h3>{% translate 'all Address' %}</h3>
+                                                <a data-url="{% url 'user:CreateAddress' %}"
+                                                   class="btn btn-sm btn-solid  js-create-book">{% translate 'Add New Address' %}</a>
+                                            </div>
+                                            <table class="table mb-0 table" id="book-table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">{% translate 'Location Type' %}</th>
+                                                    <th scope="col">{% translate 'Address Title' %}</th>
+                                                    <th scope="col">{% translate 'First Name' %}</th>
+                                                    <th scope="col">{% translate 'Last Name' %}</th>
+                                                    <th scope="col">{% translate 'Governorate' %}</th>
+                                                    <th scope="col">{% translate 'City' %}</th>
+                                                    <th scope="col">{% translate 'Phone' %}</th>
+                                                    <th scope="col">{% translate 'edit/delete' %}</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+
+                                                {% include 'users/includes/partial_book_list.html' %}
+
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="modal-book">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show active " id="settings">
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <div class="card mt-0">
+                                        <div class="card-body">
+                                            <div class="dashboard-box">
+                                                <div class="dashboard-title">
+                                                    <h4>{% translate 'Prefered Setting' %}</h4>
+
+
+                                                </div>
+
+                                                <div class="dashboard-detail" id="appendHere">
+                                                    <div class="account-setting">
+                                                        <h5>{% translate 'lang' %}</h5>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-check">
+
+                                                                    <input class="form-control" id="title" type="text"
+                                                                           value="{{ settings.lang.name }}" disabled>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="account-setting">
+                                                        <h5>{% translate 'Currency' %}</h5>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-check">
+                                                                    <input class="form-control" id="title" type="text"
+                                                                           value="{{ settings.currency.name }}"
+                                                                           disabled>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="account-setting">
+                                                        <h5>{% translate 'Dark Mode' %}</h5>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-check">
+                                                                    <input class="form-control" id="title" type="text"
+                                                                           value="{{ settings.dark_mode }}" disabled>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="account-setting">
+                                                        <h5>{% translate 'Notification' %}</h5>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-check">
+                                                                    <input class="form-control" id="title" type="text"
+                                                                           value="{{ settings.notification }}" disabled>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-6">
+                                    <div class="card mt-0">
+                                        <div class="card-body">
+                                            <div class="dashboard-box">
+
+
+                                            </div>
+                                            <br><br>
+                                            <div class="card-body">
+                                                <table class="table mb-0">
+                                                    <h3>Social Login</h3>
+                                                    <tbody>
+
+                                                    <h3>GitHub</h3>
+                                                    {% if github_login %}
+                                                        <p>Connected as <a
+                                                                href="https://github.com/{{ github_login.extra_data.login }}/"
+                                                                target="_blank">{{ github_login.extra_data.login }}</a>
+                                                        </p>
+                                                        {% if can_disconnect %}
+                                                            <form method="post"
+                                                                  action="{% url 'social:disconnect' 'github' %}">
+                                                                {% csrf_token %}
+                                                                <button type="submit">Disconnect from GitHub
+                                                                </button>
+                                                            </form>
+                                                        {% else %}
+                                                            <button type="button" disabled>Disconnect from GitHub
+                                                            </button>
+                                                            <p style="color: red">You must <a
+                                                                    href="{% url 'password' %}">define
+                                                                a password</a> for your account before disconnecting
+                                                                from
+                                                                Github.</p>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <a href="{% url 'social:begin' 'github' %}">Connect to
+                                                            GitHub</a>
+                                                    {% endif %}
+
+                                                    <h3>Twitter</h3>
+                                                    {% if twitter_login %}
+                                                        <p>Connected as <a
+                                                                href="https://twitter.com/{{ twitter_login.extra_data.access_token.screen_name }}/"
+                                                                target="_blank">@{{ twitter_login.extra_data.access_token.screen_name }}</a>
+                                                        </p>
+                                                        {% if can_disconnect %}
+                                                            <form method="post"
+                                                                  action="{% url 'social:disconnect' 'twitter' %}">
+                                                                {% csrf_token %}
+                                                                <button type="submit">Disconnect from Twitter
+                                                                </button>
+                                                            </form>
+                                                        {% else %}
+                                                            <button type="button" disabled>Disconnect from Twitter
+                                                            </button>
+                                                            <p style="color: red">You must <a
+                                                                    href="{% url 'password' %}">define
+                                                                a password</a> for your account before disconnecting
+                                                                from
+                                                                Twitter.</p>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <a href="{% url 'social:begin' 'twitter' %}">Connect to
+                                                            Twitter</a>
+                                                    {% endif %}
+
+                                                    <h3>Facebook</h3>
+                                                    {% if facebook_login %}
+                                                        <p>Connected as <a
+                                                                href="https://facebook.com/{{ facebook_login.extra_data.id }}/"
+                                                                target="_blank">{{ facebook_login.extra_data.id }}</a>
+                                                        </p>
+                                                        {% if can_disconnect %}
+                                                            <form method="post"
+                                                                  action="{% url 'social:disconnect' 'facebook' %}">
+                                                                {% csrf_token %}
+                                                                <button type="submit">Disconnect from Facebook
+                                                                </button>
+                                                            </form>
+                                                        {% else %}
+                                                            <button type="button" disabled>Disconnect from
+                                                                Facebook
+                                                            </button>
+                                                            <p style="color: red">You must <a
+                                                                    href="{% url 'password' %}">define
+                                                                a password</a> for your account before disconnecting
+                                                                from
+                                                                Facebook.</p>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <a href="{% url 'social:begin' 'facebook' %}">Connect to
+                                                            Facebook</a>
+                                                    {% endif %}
+
+
+                                                </table>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="product-buttons text-center ">
+
+
+                                        <a href="{% url 'user:UserSettingUpdate' user.slug %}">
+                                            <button type="button"
+                                                    class="btn btn-solid  ">{% trans "Change Setting" %}</button>
+                                        </a>
+
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--  dashboard section end -->
+
+
+    <!-- Modal start -->
+    <div class="modal logout-modal fade" id="logout" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{% translate 'Logging Out' %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% translate ' Do you want to log out?' %}
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'user:CustomerLogout' %}" class="btn btn-dark btn-custom"
+                       data-bs-dismiss="modal">no</a>
+                    <a href="{% url 'user:CustomerLogout' %}" class="btn btn-solid btn-custom">yes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal end -->
+
+
+
+{% endblock %}
+{% block custom_js %}
+
+
+
+    <script>
+        $("#currency,#dark_mode,#notification,#deactivate,#delete").change(function () {
+            var url = $("#UserSettingForm").attr("data-setting-url");  // get the url of the `load_cities` view
+            var Currency = $("#currency").val()
+            var DarkMode = $("#dark_mode").val()
+            var Notification = $("#notification").val()
+            var deactivateAcoount = $("#deactivate").val()
+            var deleteAccount = $("#delete").val()
+
+            $.ajax({                       // initialize an AJAX request
+                url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+                data: {
+                    'currency': Currency,
+                    'dark_mode': DarkMode,
+                    'notification': Notification,
+                    'deactivate': deactivateAcoount,
+                    'delete': deleteAccount,
+
+                },
+
+                success: function (data) {
+                    $('#appendHere').html(data.rendered_table);
+
+                }
+            });
+
+        });
+    </script>
+
+
+{% endblock custom_js %}
+{% block foot %} {% include 'front/footer.html' %}  {% endblock %}
+{% block js %} {% include 'front/js.html' %}  {% endblock %}

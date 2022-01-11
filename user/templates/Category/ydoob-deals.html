@@ -1,0 +1,243 @@
+{% extends 'front/homebase.html' %}
+{% load static %}
+{% load i18n %}
+{% load mptt_tags %}
+{% block body %}
+    <!-- breadcrumb start -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="page-title">
+                        <h2>{% translate 'Ydoob Deals' %}</h2>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'home:index' %}">{% translate "home" %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% translate 'Deals' %}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb end -->
+
+
+    <!-- section start -->
+    <section class="section-b-space ratio_asos">
+        <div class="collection-wrapper">
+            <div class="container">
+                <div class="collection-product-wrapper">
+                    <div class="product-top-filter">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="filter-main-btn"><span
+                                        class="filter-btn btn btn-theme"><i
+                                        class="fa fa-filter"
+                                        aria-hidden="true"></i> {% translate 'Filter' %}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="product-filter-content">
+                                    <div class="search-count">
+                                        <h5>Showing Products 1-24 of {{ deal_product.paginator.count }} Result</h5>
+                                    </div>
+                                    <div class="collection-view">
+                                        <ul>
+                                            <li><i class="fa fa-th grid-layout-view"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-list-ul list-layout-view"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="collection-grid-view">
+                                        <ul>
+                                            <li><img
+                                                    src="{% static '' %}images/icon/2.png"
+                                                    alt=""
+                                                    class="product-2-layout-view"></li>
+                                            <li><img
+                                                    src="{% static '' %}images/icon/3.png"
+                                                    alt=""
+                                                    class="product-3-layout-view"></li>
+                                            <li><img
+                                                    src="{% static '' %}images/icon/4.png"
+                                                    alt=""
+                                                    class="product-4-layout-view"></li>
+                                            <li><img
+                                                    src="{% static '' %}images/icon/6.png"
+                                                    alt=""
+                                                    class="product-6-layout-view"></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product-page-per-view">
+                                        <select>
+                                            <option value="High to low">24 Products Par Page
+                                            </option>
+                                            <option value="Low to High">50 Products Par Page
+                                            </option>
+                                            <option value="Low to High">100 Products Par
+                                                Page
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="product-page-filter">
+                                        <select>
+                                            <option value="High to low">Sorting items
+                                            </option>
+                                            <option value="Low to High">50 Products</option>
+                                            <option value="Low to High">100 Products
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-wrapper-grid">
+                        <div class="row margin-res"> {% for dod in deal_product %}
+                            <div class="col-xl-3 col-6 col-grid-box">
+
+                                <div class="product-box">
+
+                                    <div class="img-wrapper">
+                                        <div class="front">
+                                            {% with ri=dod.productmedia_set.first %}
+                                                <a href="{% url 'home:ProductDetail'  dod.id dod.slug %}"><img
+                                                        src="{{ ri.image.url }}"
+                                                        class="img-fluid blur-up lazyload bg-img"
+                                                        alt=""></a>
+                                            {% endwith %}
+                                        </div>
+                                        <div class="cart-info cart-wrap bg-color-cls sm-box">
+                                            <button onclick="openCart()"
+                                                    title="Add to cart"><i
+                                                    class="ti-shopping-cart"></i></button>
+                                            <a href="javascript:void(0)"
+                                               title="Add to Wishlist"><i
+                                                    class="ti-heart" aria-hidden="true"></i></a>
+                                            <a href="#" data-bs-toggle="modal"
+                                               data-bs-target="#quick-view"
+                                               title="Quick View"><i
+                                                    class="ti-search"
+                                                    aria-hidden="true"></i></a>
+                                            <a href="compare.html" title="Compare"><i
+                                                    aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-detail">
+                                        <div class="rating"><i class="fa fa-star"></i> <i
+                                                class="fa fa-star"></i> <i
+                                                class="fa fa-star"></i> <i
+                                                class="fa fa-star"></i> <i
+                                                class="fa fa-star"></i>
+                                        </div>
+                                        <a href="{% url 'home:ProductDetail'  dod.id dod.slug %}">
+                                            <h6>{{ dod.title }}</h6>
+                                        </a>
+                                        <h4>
+                                            {{ dod.final_price }}{{ active_currency }}
+                                            <del>
+                                                {{ dod.sale_price }}{{ active_currency }}</del>
+                                        </h4>
+                                        <ul class="color-variant">
+                                            <li class="bg-color1"></li>
+                                            <li class="bg-color3"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>{% endfor %}
+                        </div>
+
+
+                        {% if deal_product.has_other_pages %}
+                            <div class="product-pagination">
+                                <div class="theme-paggination-block">
+                                    <div class="row">
+                                        <div class="col-xl-6 col-md-6 col-sm-12">
+                                            <nav aria-label="Page navigation">
+
+                                                <ul class="pagination">
+                                                    {% if deal_product.has_previous %}
+                                                        <li class="page-item"><a
+                                                                class="page-link"
+                                                                href="?page={{ deal_product.previous_page_number }}"
+                                                                aria-label="Previous"><span
+                                                                aria-hidden="true"><i
+                                                                class="fa fa-chevron-left"
+                                                                aria-hidden="true"></i></span>
+                                                            <span
+                                                                    class="sr-only">Previous</span></a>
+                                                        </li>
+                                                    {% endif %}
+
+                                                    {% if deal_product.has_previous %}
+                                                        <li class="page-item"><a
+                                                                class="page-link"
+                                                                href="?page={{ deal_product.previous_page_number }}">{{ deal_product.previous_page_number }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% for i in deal_product.paginator.page_range %}
+                                                        {% if deal_product.number == i %}
+                                                            <li class="page-item active">
+                                                                <a
+                                                                        class="page-link"
+                                                                        href="?page={{ i }}">{{ i }}</a>
+                                                            </li>
+                                                        {% endif %}{% endfor %}
+                                                    {% if notifications.has_next %}
+                                                        <li class="page-item"><a
+                                                                class="page-link"
+                                                                href="?page={{ deal_product.next_page_number }}">{{ deal_product.next_page_number }}</a>
+                                                        </li>
+                                                    {% endif %}
+                                                    {% if deal_product.has_next %}
+                                                        <li class="page-item"><a
+                                                                class="page-link"
+                                                                href="?page={{ deal_product.next_page_number }}"
+                                                                aria-label="Next"><span
+                                                                aria-hidden="true"><i
+                                                                class="fa fa-chevron-right"
+                                                                aria-hidden="true"></i></span>
+                                                            <span
+                                                                    class="sr-only">Next</span></a>
+                                                        </li>
+                                                    {% endif %}
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                        <div class="col-xl-6 col-md-6 col-sm-12">
+                                            <div class="product-search-count-bottom">
+
+                                                <h5>{% translate 'Showing Products' %} {{ deal_product.paginator.page_range }}
+                                                    of
+                                                    {{ deal_product.paginator.count }} Result</h5>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+    <!-- section End -->
+
+{% endblock %}
+
+
+
+{% block foot %} {% include 'front/footer.html' %}  {% endblock %}
+{% block js %} {% include 'front/js.html' %}  {% endblock %}
