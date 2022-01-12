@@ -1,0 +1,38 @@
+{% extends 'frontend/homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block body %}
+
+
+<section class="sec-block pb-0">
+			<div class="fixed-bg light-bg"></div>
+			<div class="container">
+				<div class="testimonial-section">
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="testi-img" data-aos="fade-up" data-aos-duration="1000">
+								<img src="https://via.placeholder.com/382x684" alt="">
+							</div><!--testi-img end-->
+						</div>
+						<div class="col-lg-8">
+							<div class="testi-slides">
+								<div class="testi-comment">
+									<p>Rump spare ribs tail <strong>pastrami ham hock turducken</strong> fatback salami. Ham hock pork belly, corned swine salami.</p>
+									<h3>Avy Deluxer</h3>
+								</div><!--testi-comment end-->
+							</div><!--testi-slides end-->
+						</div>
+					</div>
+				</div><!--testimonial-section end-->
+			</div>
+		</section>
+
+{% endblock %}
+
+{#<script src="{% static '' %}{% static '' %}{% static '' %}assets/js/particle-theme.js"></script>#}
+{#	<script src="{% static '' %}{% static '' %}{% static '' %}assets/js/page-service-item.js"></script>#}
+
+{% block foot %} {% include 'frontend/footer.html' %}  {% endblock %}
+{% block js %} {% include 'frontend/js.html' %}{% endblock %}
+

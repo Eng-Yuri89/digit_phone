@@ -28,7 +28,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import FormView, TemplateView
 
 from core.decorators import unauthenticated_user
-from core.forms.users import UserLoginForm, PasswordResetForm, SetPasswordForm
+from core.forms.users import PasswordResetForm, SetPasswordForm, UserLoginForm
 from user.forms.forms import UserSignUpForm
 from user.signals import user_logged_in
 
@@ -92,22 +92,20 @@ class UserLogin(View):
     template_name = 'users/dashboard/CustomerLogin.html'
 
     def get(self, request, *args, **kwargs):
-
-        if request.user.is_authenticated:
-            return redirect('home:index')
-        else:
-            form = UserLoginForm()
-            context = {
-                "title": "Login",
-                "form": form
-            }
-            return render(request, self.template_name, context)
+        form = UserLoginForm()
+        context = {
+            "title": "Login",
+            "form": form
+        }
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         form = UserLoginForm(request.POST or None)
+
         next_ = request.GET.get('next')
         next_post = request.POST.get('next')
         redirect_path = next_ or next_post or None
+
         if form.is_valid():
             email = form.cleaned_data.get("email")
             password = form.cleaned_data.get("password")
@@ -126,17 +124,12 @@ class UserLogin(View):
                     instance=user,
                     request=request
                 )
-                try:
-                    del request.session['guest_email_id']
 
-                except:
-                    pass
-                else:
-                    return redirect("/")
+                return redirect("/")
 
             else:
                 print("error")
-                return redirect("/home/login/")
+                return redirect("/login/")
 
         context = {
             "title": "Login",
@@ -147,7 +140,7 @@ class UserLogin(View):
 
 def UserLogout(request):
     logout(request)
-    return redirect('home:index')
+    return redirect('home:HomeIndex')
 
 
 ################Profile##############

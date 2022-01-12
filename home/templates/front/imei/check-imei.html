@@ -1,0 +1,216 @@
+{% extends 'frontend/homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block body %}
+
+
+
+    <section class="sec-block md-pb-0">
+        <div class="shop-single-page">
+            <div class="shop-large-slider">
+                <div class="shop-large-slide">
+                    <img src="https://via.placeholder.com/770x570" alt="">
+                </div><!--shop-large-slide end-->
+                <div class="shop-large-slide">
+                    <img src="https://via.placeholder.com/770x570" alt="">
+                </div><!--shop-large-slide end-->
+                <div class="shop-large-slide">
+                    <img src="https://via.placeholder.com/770x570" alt="">
+                </div><!--shop-large-slide end-->
+                <div class="shop-large-slide">
+                    <img src="https://via.placeholder.com/770x570" alt="">
+                </div><!--shop-large-slide end-->
+            </div><!--shop-large-slider end-->
+
+        </div><!--shop-single-page end-->
+    </section>
+
+  	<section class="sec-block">
+			<div class="fixed-bg dark-bg"></div>
+			<div class="container">
+				<div class="oct-sec-text max-width-70 text-center white">
+					<h2>{% translate 'Add IMEI Number ToCheck' %}</h2>
+					<p>Integer eu metus at orci scelerisque rutrum. Vivamus condimentum, ipsum vitae iaculis cursus, turpis nisl ultricies massa.</p>
+					<form class="gr-form">
+						<input type="number" name="imei_q" id="imei_q" placeholder="IMEI Code" class="form-control">
+						<button type="submit" class="btn-default gradient-bg2">Search<span></span></button>
+					</form>
+                    <br><br>
+                    <div id="appendHere">
+
+                    </div>
+				</div><!--oct-sec-text end-->
+			</div>
+		</section>
+
+    <section class="sec-block">
+        <div class="fixed-bg light-bg"></div>
+        <div class="container">
+            <div class="review-section-head">
+                <h3 class="sc-title float-none">Ratings and reviews</h3>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="review-head">
+                            <h2>4.8<sub>%</sub></h2>
+                            <div class="review-count">
+                                <h3>33 reviews</h3>
+                                <ul class="rating">
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                </ul>
+                            </div>
+                        </div><!--review-head end-->
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="av-div">
+                            <h3>Recommend this product</h3>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" data-width="95"></div>
+                            </div>
+                            <div class="coun-dv">
+                                <h2>95<small>%</small></h2>
+                                <p>of consumers recommend this product</p>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--review-section-head end-->
+            <div class="review-main-section">
+                <ul class="comments-list">
+                    <li>
+                        <div class="comment">
+                            <div class="cm-thumb">
+                                <img src="https://via.placeholder.com/60x60" alt="">
+                            </div>
+                            <div class="cm-details">
+                                <h3>Mous Lloyd <span>4 hours ago</span></h3>
+                                <p>Ipsum curae curabitur dapibus netus dolor ante ut laoreet, turpis faucibus sodales
+                                    euismod conubia taciti quisque vestibulum, vitae adipiscing bibendum himenaeos.</p>
+                                <ul class="rating">
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                </ul>
+                            </div>
+                        </div><!--comment end-->
+                    </li>
+
+                </ul>
+                <div class="post-comments">
+                    <h3 class="sc-title float-none">Write your review</h3>
+                    <form method="post" action="#" id="contact-form">
+                        <div class="form-group">
+                            <div class="response"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" name="name" class="form-control name" placeholder="Antho_">
+                                </div><!--form-group end-->
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control email"
+                                           placeholder="E.g., a.octavian@gmail.com">
+                                </div><!--form-group end-->
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <textarea name="message" class="form-control" placeholder="Your review"></textarea>
+                                </div><!--form-group end-->
+                            </div>
+                            <div class="col-lg-12">
+                                <button type="button" class="btn-primary submit btn-default" id="submit">Login to Review
+                                    <span></span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!--review-main-section end-->
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{#<script src="{% static '' %}{% static '' %}{% static '' %}assets/js/particle-theme.js"></script>#}
+{#	<script src="{% static '' %}{% static '' %}{% static '' %}assets/js/page-service-item.js"></script>#}
+
+
+{% block custom_js %}
+    <script>
+
+        /*
+
+        On focus out on input nickname,
+
+        call AJAX get request to check if the nickName
+
+        already exists or not.
+
+        */
+
+        $("#imei_q").change(function () {
+
+
+            // get the nickname
+
+            var imei_q = $(this).val();
+
+            // GET AJAX request
+
+            $.ajax({
+
+                type: 'GET',
+
+                url: "{% url 'home:AjaxIMEIClientFront' %}",
+
+                data: {"imei_q": imei_q},
+
+                success: function (data) {
+                    $('#appendHere').html(data.rendered_table);
+
+
+                    // if not valid user, alert the user
+
+                    if (data["valid"]) {
+
+                        alert("You cannot create a friend with same nick name");
+
+                        var IMEINumber = $("#imei_q");
+
+                        IMEINumber.val("")
+
+                        IMEINumber.focus()
+
+                    }
+
+
+                },
+
+                error: function (data) {
+
+                    console.log(data)
+
+                }
+
+            })
+
+        })
+
+    </script>
+{% endblock custom_js %}
+
+
+
+
+{% block foot %} {% include 'frontend/footer.html' %}  {% endblock %}
+{% block js %} {% include 'frontend/js.html' %}{% endblock %}
+

@@ -35,7 +35,7 @@ class UserLoginForm(forms.Form):
     """
     email = forms.EmailField(label=_(u'Email'))
     password = forms.CharField(widget=forms.PasswordInput, label=_(u'Password'))
-    remember_me = forms.BooleanField()
+    remember_me = forms.BooleanField(required=False)
 
     def clean(self, *args, **kwargs):
         email = self.cleaned_data.get("email")

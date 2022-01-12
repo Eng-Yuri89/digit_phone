@@ -1,0 +1,227 @@
+{% extends 'frontend/homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block body %}
+
+
+
+		<section class="sec-block md-pb-0">
+			<div class="shop-single-page">
+				<div class="shop-large-slider">
+					<div class="shop-large-slide">
+						<img src="https://via.placeholder.com/770x570" alt="">
+					</div><!--shop-large-slide end-->
+					<div class="shop-large-slide">
+						<img src="https://via.placeholder.com/770x570" alt="">
+					</div><!--shop-large-slide end-->
+					<div class="shop-large-slide">
+						<img src="https://via.placeholder.com/770x570" alt="">
+					</div><!--shop-large-slide end-->
+					<div class="shop-large-slide">
+						<img src="https://via.placeholder.com/770x570" alt="">
+					</div><!--shop-large-slide end-->
+				</div><!--shop-large-slider end-->
+
+			</div><!--shop-single-page end-->
+		</section>
+
+	<section class="sec-block pb-0">
+			<div class="fixed-bg light-bg"></div>
+			<div class="container">
+				<div class="testimonial-section">
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="testi-img" data-aos="fade-up" data-aos-duration="1000">
+								<img src="https://via.placeholder.com/382x684" alt="">
+							</div><!--testi-img end-->
+						</div>
+
+						<div class="col-lg-8">
+                             <form class="needs-validation add-product-form" novalidate=""
+                  enctype="multipart/form-data" action="{% url 'home:AddIMEIFront' %}"
+                  method="post">
+                {% csrf_token %}
+							<div class="testi-slides">
+								<div class="testi-comment">
+                                      <div>
+                {% if form_show_errors %}
+                {% endif %}
+                {% if imei_form.errors %}
+                    {% for error_field, error_message in imei_form.errors.items %}
+
+                        <div class="alert alert-danger">
+                            {{ error_field|striptags }}: {{ error_message|striptags }}
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+
+                {% endif %}
+            </div>
+									   <div class="card-body">
+                                <div class="form-group">
+                                    <label for="inputEstimatedBudget">{% translate 'IMEI number' %}</label>
+                                    <input type="number" name="imei_number" id="inputEstimatedBudget"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEstimatedBudget">{% translate 'IMEI Check' %}</label>
+                                    <select name="imei_check" id="inputStatus"
+                                            class="form-control custom-select">
+                                        <option selected
+                                                disabled>{% translate 'Select one' %}</option>
+
+                                           {% for value, text in imei_form.imei_check.field.choices %}
+                                            <option value="{{ value }}">{{ text }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEstimatedBudget">{% translate 'buy_date' %}</label>
+                                    <input type="date" name="buy_date" id="inputEstimatedBudget"
+                                           class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputEstimatedDuration">{% translate 'Image' %}</label>
+                                    <input type="file" class="form-control" name='image'
+                                           onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                                </div>
+                                <img id="blah" alt="your image" width="100" height="100" src=""/>
+                            </div>
+                                    <input type="submit" value="{% translate 'Add New IMEI' %}"
+                               class="btn btn-success float-right">
+
+								</div><!--testi-comment end-->
+							</div><!--testi-slides end-->
+						</form></div>
+
+					</div>
+				</div><!--testimonial-section end-->
+			</div>
+		</section>
+
+		<section class="sec-block">
+			<div class="fixed-bg light-bg"></div>
+			<div class="container">
+				<div class="review-section-head">
+					<h3 class="sc-title float-none">Ratings and reviews</h3>
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="review-head">
+								<h2>4.8<sub>%</sub></h2>
+								<div class="review-count">
+									<h3>33 reviews</h3>
+									<ul class="rating">
+										<li><i class="fa fa-star"></i></li>
+										<li><i class="fa fa-star"></i></li>
+										<li><i class="fa fa-star"></i></li>
+										<li><i class="fa fa-star"></i></li>
+										<li><i class="fa fa-star"></i></li>
+									</ul>
+								</div>
+							</div><!--review-head end-->
+						</div>
+						<div class="col-lg-6">
+							<div class="av-div">
+								<h3>Recommend this product</h3>
+								<div class="progress">
+									<div class="progress-bar" role="progressbar" data-width="95"></div>
+								</div>
+								<div class="coun-dv">
+									<h2>95<small>%</small></h2>
+									<p>of consumers recommend this product</p>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div><!--review-section-head end-->
+				<div class="review-main-section">
+					<ul class="comments-list">
+						<li>
+							<div class="comment">
+								<div class="cm-thumb">
+									<img src="https://via.placeholder.com/60x60" alt="">
+								</div>
+								<div class="cm-details">
+									<h3>Mous Lloyd <span>4 hours ago</span></h3>
+									<p>Ipsum curae curabitur dapibus netus dolor ante ut laoreet, turpis faucibus sodales euismod conubia taciti quisque vestibulum, vitae adipiscing bibendum himenaeos.</p>
+									<ul class="rating">
+										<li><i class="fa fa-star"></i></li>
+										<li><i class="fa fa-star"></i></li>
+										<li><i class="fa fa-star"></i></li>
+										<li><i class="fa fa-star"></i></li>
+										<li><i class="fa fa-star"></i></li>
+									</ul>
+								</div>
+							</div><!--comment end-->
+						</li>
+
+					</ul>
+					<div class="post-comments">
+						<h3 class="sc-title float-none">Write your review</h3>
+						<form method="post" action="#" id="contact-form">
+							<div class="form-group">
+                                <div class="response"></div>
+                            </div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										<input type="text" name="name" class="form-control name" placeholder="Antho_">
+									</div><!--form-group end-->
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+										<input type="email" name="email" class="form-control email" placeholder="E.g., a.octavian@gmail.com">
+									</div><!--form-group end-->
+								</div>
+								<div class="col-lg-12">
+									<div class="form-group">
+										<textarea name="message" class="form-control" placeholder="Your review"></textarea>
+									</div><!--form-group end-->
+								</div>
+								<div class="col-lg-12">
+									<button type="button" class="btn-primary submit btn-default" id="submit">Login to Review <span></span></button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div><!--review-main-section end-->
+			</div>
+		</section>
+
+
+{% endblock %}
+
+{#<script src="{% static '' %}{% static '' %}{% static '' %}assets/js/particle-theme.js"></script>#}
+{#	<script src="{% static '' %}{% static '' %}{% static '' %}assets/js/page-service-item.js"></script>#}
+{% block custom_js %}
+
+    <script>
+        $(document).ready(function () {
+
+            // Custom JavaScript for all "service-item" pages
+
+            // Initiate typed.js text effect (done custom for each typed text effect)
+            $(".animated-text-effect").typed({
+                strings: [" Digithup ^"], // example for multiple headings strings: ["Awesome Ineractive Effect^", "Click on the live effect!^", "Coolest Modern HTML Theme^"],
+                contentType: "text",
+                typeSpeed: 30,
+                loop: true,
+                backDelay: 1200,
+                showCursor: true,
+                startDelay: 3200, // PRELOADER -- comment-out this line if you stop using page preloader
+                cursorChar: "|"
+            });
+
+        });
+    </script>
+
+
+
+{% endblock custom_js %}
+{% block foot %} {% include 'frontend/footer.html' %}  {% endblock %}
+{% block js %} {% include 'frontend/js.html' %}{% endblock %}
+

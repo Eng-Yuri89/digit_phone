@@ -3874,6 +3874,12 @@ header.style2.hp5 nav ul li:last-child a {
 	background-color: #4a44f2;
 	color: #fff;
 }
+
+.orange-clr,
+.btn-default.orange-clr.style3 {
+	background-color: #f68826;
+	color: #fff;
+}
 .main-banner .btn-default {
 	font-weight: 600;
 }
