@@ -1,0 +1,36 @@
+{% load i18n %}
+{% if error_network %}
+        <div class="form-group">
+                                        <label for="inputName">{% translate 'Client Name' %}</label>
+                                        <input type="text" name="client" id="inputName" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName">{% translate 'Client Code' %}</label>
+                                        <input type="text"  id="inputName" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName">{% translate 'Client Phone Number' %}</label>
+                                        <input type="text"  id="inputName"
+                                               class="form-control">
+                                    </div>
+{% elif match_client %}
+
+    <div class="form-group">
+                                        <label for="inputName">{% translate 'Client Name' %}</label>
+                                        <input type="text" name="client" value="{{ match_client }}" id="inputName" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName">{% translate 'Client Code' %}</label>
+                                        <input type="text"  value="{{ match_client.client_code }}" id="inputName" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName">{% translate 'Client Phone Number' %}</label>
+                                        <input type="text"  value="{{ match_client.phone }}" id="inputName"
+                                               class="form-control">
+                                    </div>
+{% endif %}
+
+{% block custom_js %}
+
+
+{% endblock custom_js %}

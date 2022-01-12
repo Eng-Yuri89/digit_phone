@@ -34,6 +34,7 @@ urlpatterns += i18n_patterns(
     # path('admin/', admin.site.urls),
     path('', include('home.urls'), name='home'),
     path('', include('blog.urls'), name='blog'),
+    path('', include('phone.urls'), name='phone'),
 
 
     path('tinymce/', include('tinymce.urls')),

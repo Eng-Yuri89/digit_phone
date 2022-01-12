@@ -8,7 +8,7 @@
     <a href="{% url 'core:AdminIndex' %}" class="brand-link">
         <img src="{% static '' %}dist/img/digithuplogo.png" alt="AdminLTE Logo"
              class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">DigitHup Lawyer </span>
+        <span class="brand-text font-weight-light">DigitHup  IMEI Checker </span>
     </a>
 
     <!-- Sidebar -->
@@ -19,7 +19,7 @@
                 <img src="{% static '' %}dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Digit Blog</a>
+                <a href="#" class="d-block">Digit IMEI</a>
             </div>
         </div>
 
@@ -92,7 +92,6 @@
                                 <p> {% translate 'All Products' %}</p>
                             </a>
                         </li>
-
                         <li class="nav-item">
                             <a href="{% url 'blog:AdminArticle' %}" class="nav-link">
                                 <i class="nav-icon far fa-circle text-danger"></i>
@@ -132,8 +131,6 @@
                                 <p>{% translate 'Site Setting' %}</p>
                             </a>
                         </li>
-
-
                         <li class="nav-item">
                             <a href="{% url 'core:AdminSlider' %}" class="nav-link">
                                 <i class="fas fa-circle nav-icon"></i>
@@ -148,7 +145,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-header">{% translate "client & Power of Attorney " %}</li>
+                <li class="nav-header">{% translate "client" %}</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-chart-pie"></i>
@@ -159,123 +156,34 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{% url 'phone:AdminClient' %}" class="nav-link">
                                 <i class="nav-icon far fa-circle text-info"></i>
                                 <p class="text">{% translate 'Client' %}</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
-                                <p class="text">{% translate ' Power of Attorney' %}</p>
-                            </a>
-                        </li>
+
 
                     </ul>
                 </li>
-                 <li class="nav-header">{% translate "court " %}</li>
+                 <li class="nav-header">{% translate "IMEI Checker " %}</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-table"></i>
                         <p>
-                            {% translate 'court' %}
+                            {% translate 'IMEI' %}
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
 
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{% url 'phone:AdminIMEI' %}" class="nav-link">
                                 <i class="nav-icon far fa-circle text-info"></i>
-                                <p class="text">{% translate ' court ' %}</p>
+                                <p class="text">{% translate 'IMEI List' %}</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
-                                <p class="text">{% translate 'court Circuit ' %}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                 <li class="nav-header">{% translate "Cases " %}</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tree"></i>
-                        <p>
-                            {% translate 'Cases' %}
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
 
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
-                                <p class="text">{% translate 'Cases Type' %}</p>
-                            </a>
-                        </li>
-                    {% if all_cases_type  %}
-                        {% for rs in all_cases_type %}
-
-
-                            <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
-                                <p class="text">{{ rs.name }}</p>
-                            </a>
-                        </li>
-                        {% endfor %}{% endif %}
-
-
-                    </ul>
-                </li>
-
-
-                <li class="nav-header">{% translate "Lawyer's Agenda " %}</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            {% translate "Lawyer's Agenda " %}
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-
-                        <li class="nav-item">
-                            <a href="{% url 'blog:AdminTag' %}" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
-                                <p class="text">{% translate '  Agenda  ' %}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-header">{% translate "Lawyer's Accounting " %}</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            {% translate "Accounting " %}
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-
-                        <li class="nav-item">
-                            <a href="{% url 'blog:AdminTag' %}" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
-                                <p class="text">{% translate 'Accounting' %}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-
-
-
-                <i class="fal fa-audio-description"></i>
+                        <i class="fal fa-audio-description"></i></ul>
 
                 <li class="nav-item">
                     <a href="{% url 'core:AdminLogout' %}" class="nav-link">
@@ -287,7 +195,7 @@
 
 
             </ul>
-        </nav>
+                </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

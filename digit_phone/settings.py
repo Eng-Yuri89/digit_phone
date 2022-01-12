@@ -67,6 +67,7 @@ OWN_APPS = [
     'core.apps.CoreConfig',
     'home.apps.HomeConfig',
     'user.apps.UserConfig',
+    'phone',
 
 
 ]

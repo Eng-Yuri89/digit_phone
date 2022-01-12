@@ -1,0 +1,122 @@
+{% load i18n %}
+{% if error_network %}
+    <div data-repeater-item
+         class="table table-primary">
+        <table class="table ">
+            <td style="width:25%">
+                <select name="client"
+                        id="client_name"
+                        class="form-control custom-select">
+                    <option selected
+                            disabled>{% translate 'Select one' %}</option>
+                    {% for value, text in client_form.client.field.choices %}
+                        <option value="{{ value }}">{{ text }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td style="width:25%">
+                <select name="client_type"
+                        id="inputStatus"
+                        class="form-control custom-select">
+                    <option selected
+                            disabled>{% translate 'Select one' %}</option>
+                    {% for value, text in client_form.client_type.field.choices %}
+                        <option value="{{ value }}">{{ text }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td style="width:25%">
+                <input type="text"
+                       name="client_code"
+                       id="inputEstimatedBudget"
+                       class="form-control">
+            </td>
+            <td style="width:25%">
+                <input type="text"
+                       name="attorney_number"
+                       id="inputEstimatedBudget"
+                       class="form-control">
+            </td>
+
+
+        </table>
+    </div>
+{% elif match_client %}
+
+     <div class="features_div">
+                                                                        <div class="features_div_row first_features">
+
+                                                                            <div data-repeater-item
+                                                                                 class="table table-primary">
+                                                                                <table class="table ">
+                                                                                    <td style="width:25%">
+                                                                                        <select name="client"
+                                                                                                id="client_name"
+                                                                                                class="form-control custom-select">
+                                                                                            <option selected
+                                                                                                    disabled>{{ match_client }}</option>
+                                                                                            {% for value, text in client_form.client.field.choices %}
+                                                                                                <option value="{{ value }}">{{ text }}</option>
+                                                                                            {% endfor %}
+                                                                                        </select>
+                                                                                    </td>
+                                                                                    <td style="width:25%">
+                                                                                        <select name="client_type"
+                                                                                                id="inputStatus"
+                                                                                                class="form-control custom-select">
+                                                                                            <option selected
+                                                                                                    disabled>{% translate 'Select one' %}</option>
+                                                                                            {% for value, text in client_form.client_type.field.choices %}
+                                                                                                <option value="{{ value }}">{{ text }}</option>
+                                                                                            {% endfor %}
+                                                                                        </select>
+                                                                                    </td>
+                                                                                    <td style="width:25%">
+                                                                                        <input type="text"
+                                                                                               name="client_code"
+                                                                                               id="inputEstimatedBudget"
+                                                                                               value="{{ match_client.client_code }}"
+                                                                                               class="form-control">
+                                                                                    </td>
+                                                                                    <td style="width:25%">
+                                                                                        <input type="text"
+                                                                                               name="attorney_number"
+                                                                                               id="inputEstimatedBudget"
+                                                                                               class="form-control">
+                                                                                    </td>
+
+
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+{% endif %}
+
+{% block custom_js %}
+<script>
+            $("#client_name").change(function () {
+                var client_name = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: "{% url 'lawyer:AjaxCivilClient' %}",
+                    data: {"client_name": client_name},
+                    success: function (data) {
+                        $('{% url 'lawyer:AdminCivilCasesAdd' %}#appendHere').html(data.rendered_table);
+
+                        if (data["valid"]) {
+                            alert("You cannot create a friend with same nick name");
+                            var ClientName = $("#client_name");
+                            ClientName.val("")
+                            ClientName.focus()
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data)
+                    }
+                })
+            })
+        </script>
+
+{% endblock custom_js %}
