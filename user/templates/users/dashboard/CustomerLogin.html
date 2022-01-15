@@ -44,9 +44,9 @@
                                     <input type="password" name="password" class="form-control fa-passport"
                                            placeholder="password" required>
                                 </div><!--form-group end-->
-                            <div class="form-group">
-                                    <input  hidden type="checkbox" name="remember_me" class="form-control fa-passport"
-                                           placeholder="password" >
+                                <div class="form-group">
+                                    <input hidden type="checkbox" name="remember_me" class="form-control fa-passport"
+                                           placeholder="password">
                                 </div><!--form-group end-->
                                 {% if redirect_field_value %}
                                     <input type="hidden" name="{{ redirect_field_name }}"
@@ -66,25 +66,19 @@
                                 </div>
                                 <br> <br>
 
-                                <div class="form-footer">
-                                    <span>{% trans 'Or Login up with social platforms' %}</span>
-
-                                    <br> <br>
-
-
-                                    <ul class="social  text-center">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                                        {#                                    <li><strong><a class="fa fa-facebook-f fa-2x"#}
-                                        {#                                                   href="{% url 'social:begin' 'facebook' %}"></a></strong></li>&nbsp;&nbsp;#}
-                                        {#                                    &nbsp;&nbsp;&nbsp;&nbsp;#}
-                                        {##}
-                                        {#                                    <li><strong><a class="fa fa-google fa-2x"#}
-                                        {#                                                   href="{% url 'social:begin' 'google-oauth2' %}"></a></strong></li>&nbsp;&nbsp;#}
-
-
-                                    </ul>
-                                </div>
+{#                                <div class="form-footer">#}
+{#                                    <span>{% trans 'Or Login up with social platforms' %}</span>#}
+{#                                    <br> <br>#}
+{#                                    <ul class="social  text-center">#}
+{#                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#}
+{#                                        <li><strong><a class="fa fa-facebook-f fa-2x"#}
+{#                                                       href="{% url 'social:begin' 'facebook' %}"></a></strong></li>&nbsp;&nbsp;#}
+{#                                        &nbsp;&nbsp;&nbsp;&nbsp;#}
+{#                                        <li><strong><a class="fa fa-google fa-2x"#}
+{#                                                       href="{% url 'social:begin' 'google-oauth2' %}"></a></strong>#}
+{#                                        </li>&nbsp;&nbsp;#}
+{#                                    </ul>#}
+{#                                </div>#}
                                 <br> <br>
                                 <div>
                                     <div class="row">

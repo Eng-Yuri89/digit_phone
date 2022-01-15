@@ -1,0 +1,98 @@
+{% extends 'backend/adminbase.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% load i18n %}
+{% load mptt_tags %}
+{% block body %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>{% translate 'Update Category' %}</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a
+                                    href="{% url  'core:AdminIndex' %}">{% translate 'Home' %}</a></li>
+                            <li class="breadcrumb-item active">{% translate 'Update Category' %}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <form class="needs-validation add-product-form" novalidate=""
+                  enctype="multipart/form-data" action="{% url 'core:AdminSiteUpdate' object.pk %}"
+                  method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">{% translate 'General' %}</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                            title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="inputName">{% translate 'Domain name *' %}</label>
+                                    <input type="text" name="domain" value="{{ object.title }}" id="inputName"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDescription">{% translate 'Display name *' %} </label>
+                                    <input name="name" id="inputDescription" class="form-control"
+                                             >
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{% url 'core:AdminSite' %}" class="btn btn-secondary">{% translate 'Cancel' %}</a>
+                        <input type="submit" value="{% translate 'Add New Site' %}"
+                               class="btn btn-success float-right">
+                    </div>
+                </div>
+            </form>
+            <br>
+            <div>
+                {% if form_show_errors %}
+                {% endif %}
+                {% if form.errors %}
+                    {% for error_field, error_message in form.errors.items %}
+
+                        <div class="alert alert-danger">
+                            {{ error_field|striptags }}: {{ error_message|striptags }}
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+
+                {% endif %}
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+
+
+{% endblock %}
+{% block foot %} {% include 'backend/footer.html' %}  {% endblock %}
+{% block js %} {% include 'backend/js.html' %}  {% endblock %}

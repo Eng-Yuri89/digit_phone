@@ -18,14 +18,12 @@ from typing import List
 import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.contrib import messages
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.contrib import messages
 from django.contrib.messages import constants as message_constants
 from django.utils.translation import gettext_lazy as _
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-from django.contrib import messages
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -69,7 +67,6 @@ OWN_APPS = [
     'user.apps.UserConfig',
     'phone',
 
-
 ]
 
 THIRD_PARTY_APPS = [
@@ -80,11 +77,11 @@ THIRD_PARTY_APPS = [
     'crispy_forms',
     'tinymce',
     # 'parler',
-    # 'social_django',
+    'social_django',
     # 'whitenoise.runserver_nostatic',
     # 'formtools',
-    # 'notification',
-    # 'channels',
+
+    #'channels',
     # "bootstrap4",
     # "bootstrap_datepicker_plus",
     'import_export',
@@ -101,10 +98,23 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+
 ]
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated usersaaa.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+
+    ]
+}
 
 ROOT_URLCONF = 'digit_phone.urls'
 DJANGO_NOTIFICATIONS_CONFIG = {'USE_JSONFIELD': True}
+ASGI_APPLICATION = "digit_phone.asgi.application"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -125,6 +135,38 @@ TEMPLATES = [
 WSGI_APPLICATION = 'digit_phone.wsgi.application'
 
 
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+
+)
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+
+    # Make up a username for this person, appends a random string at the end if
+    # there's any collision.
+    # 'social_core.pipeline.user.get_username',
+
+    # CUSTOM: this gets email address as the username and validates it matches
+    # the logged in user's email address.
+    'user.pipeline.get_username',
+
+    # 'social_core.pipeline.mail.mail_validation',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details'
+)
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -139,7 +181,6 @@ DATABASES = {
         'PORT': env('DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -158,7 +199,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -207,19 +247,31 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 SITE_ID = 1
-
+BASE_URL = "127.0.0.1"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 PAGINATE_BY = 10
 
-MAIL_USE_SSL = True
-EMAIL_USE_TLS = False
-EMAIL_PORT = 465
-EMAIL_HOST = 'ydoob.com'
-EMAIL_HOST_USER = 'noreply@ydoob.com'
-EMAIL_HOST_PASSWORD = '3q7wq5t9nuYBZxr'
+# MAIL_USE_SSL = True
+# #EMAIL_USE_TLS = True
+# EMAIL_PORT = 465
+# EMAIL_HOST = 'az1-sr9.supercp.com'
+# EMAIL_HOST_USER = 'info@findstolenphone.com'
+# EMAIL_HOST_PASSWORD = '3q7wq5t9nuYBZxr'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# DEFAULT_EMAIL_FROM = 'noreply@findstolenphone.com'
+
+
+EMAIL_USE_SSL = False
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'iarbic89@gmail.com'
+EMAIL_HOST_PASSWORD = 'Hitham5320826*'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_EMAIL_FROM = 'no-reply@ydoob.com'
+DEFAULT_EMAIL_FROM = 'Multi Vendor Site <noreply@ydoob.com>'
+
+
 # email stuff
 # EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_USE_TLS = True
@@ -233,8 +285,8 @@ DEFAULT_EMAIL_FROM = 'no-reply@ydoob.com'
 AUTH_USER_MODEL = 'user.User'
 SOCIAL_AUTH_USER_MODEL = 'user.User'
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
+LOGIN_URL = '/login'
+LOGOUT_URL = '/logout'
 LOGOUT_REDIRECT_URL = '/'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
@@ -264,11 +316,23 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
 SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['first_name', 'email']
 SOCIAL_AUTH_ADMIN_SEARCH_FIELDS = ['username', 'first_name', 'email']
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated usersaaa.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+SESSION_COOKIE_AGE = 85555
+SESSION_COOKIE_SECURE = False
 
-    ]
+
+NOTIFICATION_URL = "https://ydoob.com/"
+
+# Channels
+FIREBASE_ADMIN_CREDENTIAL = os.path.join(BASE_DIR, "ydoob-32609-firebase-adminsdk-7l7op-d5b2a61f5e.json")
+GOOGLE_MAP_API_KEY = "AIzaSyCdu_gApW8OlP6qbHIVPZ3I-UJvvjQFNDY"
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
 }
+#digit_phone/wsgi.py

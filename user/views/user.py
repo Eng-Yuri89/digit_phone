@@ -1,13 +1,14 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import get_user_model, login, logout, authenticate
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import get_user_model
 from django.contrib.auth import (
     login as auth_login,
 )
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
-from django.contrib.auth.models import Group
+
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
@@ -19,7 +20,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.decorators.cache import never_cache
@@ -39,17 +40,15 @@ UserModel = get_user_model()
 @unauthenticated_user
 def UserSignup(request):
     if request.method == 'GET':
-        return render(request, 'users/dashboard/CustomerRegister.html')
+        form = UserSignUpForm()
+        return render(request, 'users/dashboard/CustomerRegister.html', {'form': form})
     if request.method == 'POST':
-        groups = Group.objects.get_or_create(name='customer')
         form = UserSignUpForm(request.POST)
         # print(form.errors.as_data())
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-            group = Group.objects.get(name='customer')
-            group.user_set.add(user)
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
             message = render_to_string('users/dashboard/UserActiveEmailMessage.html', {
@@ -64,9 +63,18 @@ def UserSignup(request):
             )
             email.send()
             return render(request, 'users/dashboard/UserActiveEmailSent.html')
+        else:
+            print(request.POST)
+            print(form.errors)
+            messages.error(request, form.errors)
+            form = UserSignUpForm()
+            return render(request, 'users/dashboard/CustomerRegister.html', {'form': form})
     else:
         form = UserSignUpForm()
     return render(request, 'users/dashboard/CustomerRegister.html', {'form': form})
+
+
+
 
 
 @unauthenticated_user
@@ -92,6 +100,9 @@ class UserLogin(View):
     template_name = 'users/dashboard/CustomerLogin.html'
 
     def get(self, request, *args, **kwargs):
+
+        if request.user.is_authenticated:
+            return redirect('home:HomeIndex')
         form = UserLoginForm()
         context = {
             "title": "Login",
@@ -140,7 +151,8 @@ class UserLogin(View):
 
 def UserLogout(request):
     logout(request)
-    return redirect('home:HomeIndex')
+    messages.success(request, "Logout Successfully!")
+    return HttpResponseRedirect(reverse_lazy("home:HomeIndex"))
 
 
 ################Profile##############

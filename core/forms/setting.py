@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.sites.models import Site
 
 from core.models.design import Setting, Country, SeoSetting, ExtraSetting, SettingFeatures, SettingSkills
 
@@ -7,6 +8,13 @@ class AdminSettingForm(forms.ModelForm):
     class Meta:
         model = Setting
         fields = '__all__'
+
+
+class SiteForm(forms.ModelForm):
+    class Meta:
+        model = Site
+        fields = '__all__'
+
 
 
 class AdminCountryForm(forms.ModelForm):

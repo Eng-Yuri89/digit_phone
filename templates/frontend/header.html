@@ -12,17 +12,19 @@
             </div><!--logo end-->
             <nav>
                 <ul>
-                    <li><a href="{% url 'home:HomeIndex' %}" title="" class="active">{% translate 'Home' %}</a>
 
-                    </li>
                     <li><a href="{% url 'home:CheckIMEIFront' %}" title="">{% translate 'Check IMEI' %}</a></li>
                     <li><a href="{% url 'home:AddIMEIFront' %}" title="">{% translate 'Add IMEI' %}</a></li>
                     <li><a href="{% url 'home:Blog' %}" title="">{% translate 'News' %}</a></li>
-                    <li><a href="{% url 'home:Contact' %}" title="">{% translate 'Contact' %}</a></li>
-                    {% if user.is_authenticated %} {% if user.first_name %} {{ user.first_name }} {% endif %}
+                    <li><a href="{% url 'user:LoginFireBase' %}" title="">{% translate 'firebase' %}</a></li>
+                     <li style="color: azure">{% if user.is_authenticated %} {% if user.first_name %}{{ user.first_name }} &nbsp;&nbsp;
+                      <a href="{% url 'user:CustomerLogout' %}" title="">{% translate 'Logout' %} </a>
+
+                     {% endif %}
+
                         {% else %}
-                        <li><a href="{% url 'user:CustomerLogin' %}" title="">{% translate 'Login' %}</a></li>
-                    {% endif %}
+                       <a href="{% url 'user:CustomerLogin' %}" title="">{% translate 'Login' %}&nbsp;&nbsp;</a>
+                    {% endif %}</li>
 
                 </ul>
             </nav><!--navigation end-->

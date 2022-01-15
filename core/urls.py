@@ -7,7 +7,7 @@ from core.views.design import SliderView, SliderDetailView, SliderCreate, Slider
 from core.views.notifications import admin_notifications
 from core.views.products import ProductList, ProductDetail, ProductUpdate, ProductDelete, ProductAdd
 from core.views.services import ServicesList, ServicesCreate, ServicesDetail, ServicesUpdate, ServicesDelete
-from core.views.setting import AdminSetting, AdminAddSetting, AdminSettingDetail
+from core.views.setting import AdminSetting, AdminAddSetting, AdminSettingDetail, AdminSite, AdminSiteUpdate
 from core.views.users import AdminLogin, AdminLogout, AdminUsersList, AdminUserCreate, AdminLockscreen
 from core.views.work import OurWorkList, OurWorkCreate, OurWorkDetail, OurWorkUpdate, OurWorkDelete
 from core.views.localization import CountryListView, CountryCreate, CountryDetailView, CountryEdit, CountryDelete, \
@@ -78,6 +78,9 @@ urlpatterns = [
     path('setting/deatail/<int:pk>/', AdminSettingDetail.as_view(), name='AdminDetailsSetting'),
     path('setting/update/<int:pk>/', ServicesUpdate.as_view(), name='AdminUpdateSetting'),
     path('setting/delete/<int:pk>/', ServicesDelete.as_view(), name='AdminDeleteSetting'),
+
+path('site/', AdminSite.as_view(), name='AdminSite'),
+    path('site/update/<int:pk>', AdminSiteUpdate.as_view(), name='AdminSiteUpdate'),
 
 
  ########## Slider   #########

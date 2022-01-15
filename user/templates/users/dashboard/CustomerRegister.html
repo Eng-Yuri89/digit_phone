@@ -1,103 +1,144 @@
-{% extends 'front/homebase.html' %}
+{% extends 'frontend/homebase.html' %}
 {% load crispy_forms_filters %}
 {% load static %}
 {% load i18n %}
 {% block body %}
-    <!-- breadcrumb start -->
-    <div class="breadcrumb-section">
+
+
+    <section class="pager-section overlay">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="page-title">
-                        <h2>{% trans 'create account' %}</h2>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="theme-breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'home:index' %}">{% translate 'Home' %}</a></li>
-                            /
-                            <li class="breadcrumb-item active" aria-current="page">{% trans 'create account' %}</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
+
         </div>
-    </div>
-    <!-- breadcrumb End -->
-
-
-    <!--section start-->
-    <section class="register-page section-b-space">
+    </section><!--pager-section end-->
+    <section class="sec-block pb-0">
+        <div class="fixed-bg light-bg"></div>
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h3>{% trans 'create account' %}</h3>
-                    <div class="theme-card">
-                        <form class="theme-form" action="{% url 'user:CustomerRegister' %}" method="post">
-                            {% csrf_token %}
-                            <div class="form-row row">
+            <div class="more-sectat">
+                <div class="row align-items-center">
+                    <div class="col-lg-5">
+                        <div class="contact-form-dv">
+                            <h3 class="sc-title float-none">Login</h3>
+
+                            <div class="alert ">
+{#                                {% if form_show_errors %}#}
+{#                                {% endif %}#}
+{#                                {% if form.errors %}#}
+{#                                    {% for error_field, error_message in form.errors.items %}#}
+{#                                        <div class="alert alert-danger">#}
+{#                                            {{ error_field|striptags }}: {{ error_message|striptags }}#}
+{#                                            <strong>{{ error|escape }}</strong>#}
+{#                                        </div>#}
+{#                                    {% endfor %}#}
+{#                                {% endif %}#}
+{#                            #}
+                             {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-warning" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            </div></div>
+                            <form class="theme-form" action="{% url 'user:CustomerRegister' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+
+                                {{ form|crispy:"bootstrap4" }}
+
+
+                                {% if redirect_field_value %}
+                                    <input type="hidden" name="{{ redirect_field_name }}"
+                                           value="{{ redirect_field_value }}"/>
+                                {% endif %}
+                                <div class="product-buttons text-center">
+
+                                    <button type="submit" class="btn btn-solid  blue-clr">{% trans "Sign Up" %}</button>
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                </div>
+                                <br> <br>
+
+                                {#                                <div class="form-footer">#}
+                                {#                                    <span>{% trans 'Or Login up with social platforms' %}</span>#}
+                                {#                                    <br> <br>#}
+                                {#                                    <ul class="social  text-center">#}
+                                {#                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#}
+                                {#                                        <li><strong><a class="fa fa-facebook-f fa-2x"#}
+                                {#                                                       href="{% url 'social:begin' 'facebook' %}"></a></strong></li>&nbsp;&nbsp;#}
+                                {#                                        &nbsp;&nbsp;&nbsp;&nbsp;#}
+                                {#                                        <li><strong><a class="fa fa-google fa-2x"#}
+                                {#                                                       href="{% url 'social:begin' 'google-oauth2' %}"></a></strong>#}
+                                {#                                        </li>&nbsp;&nbsp;#}
+                                {#                                    </ul>#}
+                                {#                                </div>#}
+                                <br> <br>
                                 <div>
-                                    {% if form.errors %}
 
-                                        {% for error_field, error_message in form.errors.items %}
-
-                                            <div class="alert alert-danger">
-                                                {{ error_field|striptags }}: {{ error_message|striptags }}
-                                                <strong>{{ error|escape }}</strong>
-                                            </div>
-                                        {% endfor %}
-
-                                    {% endif %}</div>
-                                <div class="col-md-6">
-                                    <label for="email">{% trans 'First Name' %}</label>
-                                    <input type="text" name="first_name" class="form-control" id="fname"
-                                           placeholder="{% trans 'first name' %}"
-                                           required="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="review">Last Name</label>
-                                    <input type="text" name='last_name' class="form-control" id="lname"
-                                           placeholder="{% trans 'last name' %}"
-                                           required="">
-                                </div>
-                            </div>
-                            <div class="form-row row">
-                                <div class="col-md-6">
-                                    <label for="email">{% trans 'Email' %}</label>
-                                    <input type="text" name="email" class="form-control" id="email"
-                                           placeholder="{% trans 'email' %}" required="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="review">{% trans 'Mobile Number' %}</label>
-                                    <input type="number" name='phone' class="form-control" id="review"
-                                           placeholder="{% trans 'mobile' %}" required="">
 
                                 </div>
-                                <div class="form-row row">
-                                    <div class="col-md-6">
-                                        <label for="email">{% trans 'Password' %}</label>
-                                        <input type="password" name="password1" class="form-control" id="email"
-                                               placeholder="{% trans 'password' %}" required="">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="review">{% trans 'Password Confirm' %}</label>
-                                        <input type="password" name='password2' class="form-control" id="review"
-                                               placeholder="{% trans 'confirm password' %}" required="">
-                                        <div class="col-md-6">
 
 
-                                        </div>
-                                        <input type="submit" value="{% trans 'create Account' %}" class="btn btn-solid">
-                                    </div>
-                                </div>
-                        </form>
+                            </form>
+                        </div><!--contact-form-dv end-->
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="contact-img">
+                            <img src="https://via.placeholder.com/600x566" alt="">
+                            <div class="clearfix"></div>
+                        </div><!--contact-img end-->
                     </div>
                 </div>
-            </div>
+            </div><!--contact-page-form end-->
         </div>
     </section>
-    <!--Section ends-->
+
+
+
+    <section class="sec-block">
+        <div class="fixed-bg light-bg"></div>
+        <div class="services_section contact-v">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="service_col">
+                            <div class="svs-icon">
+                                <img src="{% static '' %}assets/images/oct1.png" alt="">
+                            </div>
+                            <h3>Our address</h3>
+                            <p>Envato Pty Ltd 13/2 Elizabeth St melbourne VLC 3000 Australia</p>
+                        </div><!--service_col end-->
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="service_col">
+                            <div class="svs-icon">
+                                <img src="{% static '' %}assets/images/oct2.png" alt="">
+                            </div>
+                            <h3>Phone Number</h3>
+                            <ul>
+                                <li>Office: 1-800-763-5400</li>
+                                <li>1-800-763-5400</li>
+                            </ul>
+                        </div><!--service_col end-->
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="service_col">
+                            <div class="svs-icon">
+                                <img src="{% static '' %}assets/images/oct3.png" alt="">
+                            </div>
+                            <h3>Email Address</h3>
+                            <ul>
+                                <li>Info@octavian.io</li>
+                                <li>support@octavian.io</li>
+                            </ul>
+                        </div><!--service_col end-->
+                    </div>
+                </div>
+            </div>
+        </div><!--services_section end-->
+    </section>
+
+
 
 
 
@@ -109,5 +150,5 @@
 
 
 
-{% block foot %} {% include 'front/footer.html' %}  {% endblock %}
-{% block js %} {% include 'front/js.html' %}  {% endblock %}
+{% block foot %} {% include 'frontend/footer.html' %}  {% endblock %}
+{% block js %} {% include 'frontend/js.html' %}  {% endblock %}

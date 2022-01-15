@@ -14,6 +14,7 @@ urlpatterns = [
     path('', HomeIndex, name='HomeIndex'),
     path("contact", contact_view, name="Contact"),
 
+
     ########## Services Front #########
     path('services/', ServicesList.as_view(), name='AllServices'),
 

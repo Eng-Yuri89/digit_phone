@@ -1,22 +1,23 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DeleteView, DetailView
+from django.views.generic import ListView, DeleteView, DetailView, UpdateView
 
 from core.decorators import superuser_only
 # Create your views here.
 from core.forms.setting import AdminSettingForm, AdminExtraSettingForm, AdminSettingSkillsForm, \
-    AdminSettingFeaturesForm, AdminSeoSettingForm
+    AdminSettingFeaturesForm, AdminSeoSettingForm, SiteForm
 from core.models.design import Setting, ExtraSetting, SeoSetting, SettingFeatures, SettingSkills
 
 
 class AdminSetting(ListView):
     model = Setting
 
-    template_name = 'setting/admin.html'
+    template_name = 'setting/setting/admin.html'
 
     @method_decorator(superuser_only)
     def dispatch(self, *args, **kwargs):
@@ -26,7 +27,7 @@ class AdminSetting(ListView):
 class AdminSettingDetail(DetailView):
     model = Setting
     context_object_name = 'setting'
-    template_name = 'setting/details.html'
+    template_name = 'setting/setting/details.html'
 
 
 @login_required(login_url='/dashboard/login')
@@ -129,7 +130,7 @@ def AdminAddSetting(request, ):
             'features_form': features_form,
             'skills_form': skills_form,
         }
-        return render(request, 'setting/add.html', context)
+        return render(request, 'setting/setting/add.html', context)
     context = {
         'setting_form': setting_form,
 
@@ -138,7 +139,7 @@ def AdminAddSetting(request, ):
         'features_form': features_form,
         'skills_form': skills_form,
     }
-    return render(request, 'setting/add.html', context)
+    return render(request, 'setting/setting/add.html', context)
 
 
 class SettingDelete(DeleteView):
@@ -152,3 +153,24 @@ class SettingDelete(DeleteView):
     @method_decorator(superuser_only)
     def dispatch(self, *args, **kwargs):
         return super(SettingDelete, self).dispatch(*args, **kwargs)
+
+
+
+class AdminSite(ListView):
+    model = Site
+    template_name = 'setting/site/admin.html'
+
+    @method_decorator(superuser_only)
+    def dispatch(self, *args, **kwargs):
+        return super(AdminSite, self).dispatch(*args, **kwargs)
+
+
+class AdminSiteUpdate(UpdateView):
+    model = Site
+    form_class = SiteForm
+    template_name = 'setting/site/update.html'
+    success_url = reverse_lazy('core:AdminSite')
+
+    @method_decorator(superuser_only)
+    def dispatch(self, *args, **kwargs):
+        return super(AdminSiteUpdate, self).dispatch(*args, **kwargs)

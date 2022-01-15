@@ -8,7 +8,19 @@ from core.models.services import Tags, Categories
 
 
 def HomeIndex(request):
-    return render(request, 'frontend/index.html', )
+    try:
+        if request.user.is_authenticated:
+            # user = request.user
+            # session_id = user['idToken']
+            # request.session['uid'] = str(session_id)
+            # print(session_id)
+            return render(request, 'frontend/index.html', )
+        else:
+            return render(request, 'users/dashboard/CustomerLogin.html', )
+    except Exception as e :
+        print(e)
+        return render(request, 'users/dashboard/CustomerLogin.html', )
+
 
 
 class TagsList(ListView):

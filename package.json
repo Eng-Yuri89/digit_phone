@@ -1,0 +1,7 @@
+{
+  "name": "digit_phone",
+  "version": "1.0.0",
+  "dependencies": {
+    "firebase": "^9.4.0"
+  }
+}

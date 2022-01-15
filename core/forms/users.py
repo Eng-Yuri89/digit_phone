@@ -38,20 +38,23 @@ class UserLoginForm(forms.Form):
     remember_me = forms.BooleanField(required=False)
 
     def clean(self, *args, **kwargs):
-        email = self.cleaned_data.get("email")
-        password = self.cleaned_data.get("password")
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
 
         if email and password:
-            user = authenticate(email=email, password=password)
-
-            if not user:
-                raise forms.ValidationError("Incorrect Information  . Please Login Again")
-
-            if not user.check_password(password):
-                raise forms.ValidationError("Incorrect Password")
-
-            if not user.is_active:
-                raise forms.ValidationError("This user is not longer active.")
+            email_qs = User.objects.filter(email=email)
+            if not email_qs.exists():
+                raise forms.ValidationError("The user does not exist")
+            else:
+                is_active_qs = User.objects.filter(email=email, is_active=True)
+                if not is_active_qs.exists():
+                    # raise forms.ValidationError("Account is not active, you need to activate your account before login. An account activation link has been sent to your mailbox.")
+                    raise forms.ValidationError(
+                        f'Account is not active, your need to activate your account before login. An account activation link has been sent to your mailbox {email}')
+                else:
+                    user = authenticate(email=email, password=password)
+                    if not user:
+                        raise forms.ValidationError("Incorrect password. Please try again!")
 
         return super(UserLoginForm, self).clean(*args, **kwargs)
 
